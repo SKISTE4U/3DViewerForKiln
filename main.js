@@ -10,6 +10,15 @@ var startRenderLoop = function (engine, canvas) {
         }
     });
 }
+var cursor_x, cursor_y;
+function onMouseUpdate(e) {
+    cursor_x = e.pageX;
+    cursor_y = e.pageY;
+  }
+
+document.addEventListener('mousemove', onMouseUpdate, false);
+document.addEventListener('mouseenter', onMouseUpdate, false);
+
 function httpGet(theUrl)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -130,6 +139,10 @@ var createScene = function () {
 
     
     // scene.meshes[1].material = error_material
+    var raw_content = BABYLON.Tools.DecodeBase64('data:base64,'+BG);
+    var blob = new Blob([raw_content]);
+    var url = URL.createObjectURL(blob);
+    var layer = new BABYLON.Layer('',url, scene, true);
 
 
     setInterval(rotate,30)
@@ -196,7 +209,7 @@ var createScene = function () {
         }
     }
 
-    setInterval(move_div,10)
+    setInterval(create_error_lines,error_line_thread_time)
 
     // Create blinking material
     var t = 0;
@@ -208,25 +221,52 @@ var createScene = function () {
     return scene;
 };
 
-function move_div() {
+function create_error_lines() {
     let df = document.querySelector('#test')
-    console.log(df)
-    const pos = BABYLON.Vector3.Project(
-        SENSORS[4].sensor.getAbsolutePosition(),
-        BABYLON.Matrix.IdentityReadOnly,
-        scene.getTransformMatrix(),
-        global_camera.viewport.toGlobal(
-            engine.getRenderWidth(),
-            engine.getRenderHeight(),
-        ),
-    );
-    // df.style.left = pos._x+'px'
-    // df.style.top = pos._y+'px'
-    df.querySelector('svg').innerHTML = `
-    <line  style="cursor:pointer" id="theline" x1="${pos._x}" y1="${pos._y}" x2="1600" y2="90" stroke="red" stroke-width="2"/>
-    <line  style="cursor:pointer" id="theline" x1="1600" y1="90" x2="1800" y2="90" stroke="red" stroke-width="2"/>
-    `
-    console.log(pos._x,pos._y)
+    let offset = 0
+    console.clear()
+    df.querySelector('svg').innerHTML = ''
+    for (let x = 0; x < SENSORS.length; x++) {
+        const element = SENSORS[x];
+        if(element['error']){
+            const pos = BABYLON.Vector3.Project(
+                SENSORS[x]['sensor'].getAbsolutePosition(),
+                BABYLON.Matrix.IdentityReadOnly,
+                scene.getTransformMatrix(),
+                global_camera.viewport.toGlobal(
+                    engine.getRenderWidth(),
+                    engine.getRenderHeight(),
+                ),
+            );
+            // df.style.left = pos._x+'px'
+            // df.style.top = pos._y+'px'
+            let pos2 = {
+                _x: window.screen.availWidth - 500,
+                _y: window.screen.availHeight - 200
+            }
+            
+            console.log(`
+cursor_x (${cursor_x}) >= pos2._x (${pos2._x})
+cursor_x (${cursor_x}) <= pos2._x+200 (${pos2._x+200})
+cursor_y (${cursor_y}) >= pos2._y(${pos2._y}) - offset(${offset}) = ${pos2._y - offset}
+cursor_y (${cursor_y}) <= pos2._y (${pos2._y}) 
+                `)
+            // console.log(pos2)
+            if(cursor_x >= pos2._x &&
+                cursor_x <= pos2._x+200 &&
+                cursor_y >= pos2._y - offset - 40 &&
+                cursor_y <= pos2._y 
+            ){
+                df.querySelector('svg').innerHTML = df.querySelector('svg').innerHTML + `
+                <line  style="cursor:pointer" id="theline" x1="${pos._x}" y1="${pos._y}" x2="${pos2._x}" y2="${pos2._y-offset}" stroke="red" stroke-width="2"/>`
+            }
+            df.querySelector('svg').innerHTML = df.querySelector('svg').innerHTML + `
+            <line  style="cursor:pointer" id="theline" x1="${pos2._x}" y1="${pos2._y-offset}" x2="${pos2._x+200}" y2="${pos2._y-offset}" stroke="red" stroke-width="2"/>
+            `
+            offset += offsetOfErrorLine
+        }
+    }
+    
     
 }
 window.initFunction = async function() {
