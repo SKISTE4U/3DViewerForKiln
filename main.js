@@ -83,36 +83,6 @@ function remove_clickable() {
         catch{}
     }
 }
-function getOffset(pos) {
-    return {
-        left: pos._x,
-        top: pos._y,
-        width: 10,
-        height: 10
-    };
-}
-function connect(pos1, div2, color, thickness) {
-    var off1 = getOffset(div1);
-    var off2 = getOffset(div2);
-    // bottom right
-    var x1 = off1.left + off1.width;
-    var y1 = off1.top + off1.height;
-    // top right
-    var x2 = off2.left + off2.width;
-    var y2 = off2.top;
-    // distance
-    var length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)));
-    // center
-    var cx = ((x1 + x2) / 2) - (length / 2);
-    var cy = ((y1 + y2) / 2) - (thickness / 2);
-    // angle
-    var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
-    // make hr
-    var htmlLine = "<div class='' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-    //
-    alert(htmlLine);
-    document.body.innerHTML += htmlLine; 
-}
 
 var global_camera = null
 var default_material = null
@@ -195,31 +165,7 @@ var createScene = function () {
         }
     });
 
-    let updatePath = function (ret = false) {
-		path = []
-		path.push(global_camera.position)
-		path.push(SENSORS[0].sensor.getAbsolutePosition())
-
-        if (ret) return path
-	};
-
-    // const myLines = [
-    //     [
-    //         new BABYLON.Vector3(SENSORS[0]['position'][0],SENSORS[0]['position'][1],SENSORS[0]['position'][2]),
-    //         new BABYLON.Vector3(SENSORS[1]['position'][0],SENSORS[1]['position'][1],SENSORS[1]['position'][2]),
-    //     ]]
-
     
-    // error_line = BABYLON.MeshBuilder.CreateLineSystem("linesystem", {lines: myLines, updatable: true}, scene); 
-
-    // CREATE BG
-    // var raw_content = BABYLON.Tools.DecodeBase64('data:base64,'+BG);
-    // var blob = new Blob([raw_content]);
-    // var url = URL.createObjectURL(blob);
-
-    // var layer = new BABYLON.Layer('',url, scene, true);
-
-    // DEBUG for save coords
     if (DEBUG_FOR_SAVE_COORDS){
         let vector = { x:'', y:'', z:'' };
             scene.onPointerDown = function (event, pickResult){
@@ -266,7 +212,7 @@ function move_div() {
     let df = document.querySelector('#test')
     console.log(df)
     const pos = BABYLON.Vector3.Project(
-        SENSORS[0].sensor.getAbsolutePosition(),
+        SENSORS[4].sensor.getAbsolutePosition(),
         BABYLON.Matrix.IdentityReadOnly,
         scene.getTransformMatrix(),
         global_camera.viewport.toGlobal(
@@ -274,8 +220,12 @@ function move_div() {
             engine.getRenderHeight(),
         ),
     );
-    df.style.left = pos._x+'px'
-    df.style.top = pos._y+'px'
+    // df.style.left = pos._x+'px'
+    // df.style.top = pos._y+'px'
+    df.querySelector('svg').innerHTML = `
+    <line  style="cursor:pointer" id="theline" x1="${pos._x}" y1="${pos._y}" x2="1600" y2="90" stroke="red" stroke-width="2"/>
+    <line  style="cursor:pointer" id="theline" x1="1600" y1="90" x2="1800" y2="90" stroke="red" stroke-width="2"/>
+    `
     console.log(pos._x,pos._y)
     
 }
@@ -302,6 +252,8 @@ initFunction().then(() => {sceneToRender = scene
     // Resize
     window.addEventListener("resize", function () {
         engine.resize();
+        // this.document.querySelector('#test').querySelector('svg').height = window.innerHeight
+        // this.document.querySelector('#test').querySelector('svg').width = window.innerWidth
     });
 
 

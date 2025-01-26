@@ -48,12 +48,20 @@
         <link rel="stylesheet" href="main.css">
     </head>
     <body>
+        
+        <div id="test">
+            <svg id="svg" width="1920" height="1080">
+            <line 
+                style="cursor:pointer"
+                id="theline" 
+                x1="23" y1="24" x2="87" y2="96" stroke="black" stroke-width="4"/>
+            </svg>
+        </div>
         <div class="control_zone">
             <input type="button" value="Wireframe [Z]" onclick="go_wireframe()"><br>
             <input type="button" value="Go all ok [O]" onclick="reskin_sensors('default_material')"><br>
             <input type="button" value="Go all error [V]" onclick="reskin_sensors('error_material')">
         </div>
-        <div id="test"></div>
         <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
         <script src="zvd.js"></script>
         <script src="bg.js"></script>
