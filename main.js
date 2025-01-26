@@ -2,6 +2,7 @@ var canvas = document.getElementById("renderCanvas");
 
 var last_user_activity = 0
 var wireframe = true
+var error_buttons = []
 
 var startRenderLoop = function (engine, canvas) {
     engine.runRenderLoop(function () {
@@ -92,6 +93,9 @@ function remove_clickable() {
         catch{}
     }
 }
+function isArraysEqual(firstArray, secondArray) {
+    return firstArray.toString() === secondArray.toString();
+  }
 
 var global_camera = null
 var default_material = null
@@ -119,7 +123,7 @@ var createScene = function () {
         global_camera.lowerBetaLimit = lowerBeta;
         global_camera.upperBetaLimit = upperBeta;
     }
-
+    global_camera.wheelPrecision = wheelPrecision
     if(load_obj_from_pastebin){
         var base64_model_content = 'data:base64,'+ httpGet('https://raw.githubusercontent.com/ebustep/ZVD/refs/heads/main/ZVD.TXT')
     }
@@ -178,7 +182,7 @@ var createScene = function () {
         }
     });
 
-    
+    document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps";
     if (DEBUG_FOR_SAVE_COORDS){
         let vector = { x:'', y:'', z:'' };
             scene.onPointerDown = function (event, pickResult){
@@ -225,18 +229,24 @@ function getInfoAboutSensor(text) {
     alert(text)
 }
 
+function getSensorByPIW(PIW) {
+    for (let x = 0; x < SENSORS.length; x++) {
+        const element = SENSORS[x];
+        if (PIW == element.PIW) {
+            return element
+        }
+    }
+}
+
 function create_error_lines() {
     let df = document.querySelector('#test')
     let offset = 0
     df.querySelector('svg').innerHTML = ''
-    let temp = document.querySelectorAll('.sensor_error_button')
-    for (let x = 0; x < temp.length; x++) {
-        const element = temp[x];
-        element.remove()
-    }
+    let temp = []
     for (let x = 0; x < SENSORS.length; x++) {
         const element = SENSORS[x];
         if(element['error']){
+            temp.push(element.PIW)
             const pos = BABYLON.Vector3.Project(
                 SENSORS[x]['sensor'].getAbsolutePosition(),
                 BABYLON.Matrix.IdentityReadOnly,
@@ -258,9 +268,26 @@ function create_error_lines() {
             <line  style="cursor:pointer" id="theline" x1="${pos2._x}" y1="${pos2._y-offset}" x2="${pos2._x+WidthLine}" y2="${pos2._y-offset}" stroke="red" stroke-width="2"/>
             `
             offset += offsetOfErrorLine
+        }
+    }
+    if(!isArraysEqual(error_buttons, temp)){
+        offset = 40
+        let temp1 = document.querySelectorAll('.sensor_error_button')
+        for (let x = 0; x < temp1.length; x++) {
+            const element = temp1[x];
+            console.log(element)
+            element.remove()
+        }
+        let pos2 = {
+            _x: window.screen.availWidth - 500,
+            _y: window.screen.availHeight - 200
+        }
+        for (let x = 0; x < temp.length; x++) {
+            const element = getSensorByPIW(temp[x]);
             let button = document.createElement('input')
             button.type = 'button'
             button.value = element.name.split('sensor_')[1] + ' | PIW: '+element['PIW']
+            // button.innerHTML = element.name.split('sensor_')[1] + ' | PIW: '+element['PIW']
             button.style.top = pos2._y-offset+'px'
             button.style.left = pos2._x+'px'
             button.style.width = WidthLine+'px'
@@ -268,7 +295,13 @@ function create_error_lines() {
             button.classList.add('sensor_error_button')
             button.setAttribute('onclick',`alert('ff')`)
             document.body.appendChild(button)
+            offset += offsetOfErrorLine
         }
+        console.log(error_buttons)
+        console.log(temp)
+        if(error_buttons != temp){console.log('no')}
+        error_buttons = temp
+        
     }
     
     

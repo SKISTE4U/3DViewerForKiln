@@ -10,6 +10,7 @@ const FixedBetaAngle = false // Фиксированный угол поворо
 const lowerBeta = .5 // Минимальный угол вертикального поворота камеры
 const upperBeta = 1.8 // Максимальный угол вертикального поворота камеры
 
+const wheelPrecision = 2 // Zoom Scale
 const offsetOfErrorLine = 40
 const WidthLine = 200
 const SensorsDiameter = .5 // Диаметр создаваемых сфер
