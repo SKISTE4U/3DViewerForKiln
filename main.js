@@ -255,7 +255,7 @@ cursor_y (${cursor_y}) <= pos2._y (${pos2._y})
             if(cursor_x >= pos2._x &&
                 cursor_x <= pos2._x+200 &&
                 cursor_y >= pos2._y - offset - 40 &&
-                cursor_y <= pos2._y 
+                cursor_y <= pos2._y - offset
             ){
                 df.querySelector('svg').innerHTML = df.querySelector('svg').innerHTML + `
                 <line  style="cursor:pointer" id="theline" x1="${pos._x}" y1="${pos._y}" x2="${pos2._x}" y2="${pos2._y-offset}" stroke="red" stroke-width="2"/>`
