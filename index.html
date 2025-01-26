@@ -1,141 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Model with Sensor Monitoring</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
-        canvas {
-            display: block;
-        }
-        #info-box {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <div id="info-box"></div>
-    <script type="module">
-        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
-        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/controls/OrbitControls.js';
-        import { OBJLoader } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/loaders/OBJLoader.js';
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-        // Основные параметры
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+        <title>Babylon.js sample code</title>
 
-        // Освещение
-        const light = new THREE.AmbientLight(0x404040);
-        scene.add(light);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(10, 10, 10);
-        scene.add(directionalLight);
+        <!-- Babylon.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+        <script src="https://assets.babylonjs.com/generated/Assets.js"></script>
+        <script src="https://cdn.babylonjs.com/recast.js"></script>
+        <script src="https://cdn.babylonjs.com/ammo.js"></script>
+        <script src="https://cdn.babylonjs.com/havok/HavokPhysics_umd.js"></script>
+        <script src="https://cdn.babylonjs.com/cannon.js"></script>
+        <script src="https://cdn.babylonjs.com/Oimo.js"></script>
+        <script src="https://cdn.babylonjs.com/earcut.min.js"></script>
+        <script src="https://cdn.babylonjs.com/babylon.js"></script>
+        <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+        <script src="https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+        <script src="https://cdn.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+        <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+        <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+        <script src="https://cdn.babylonjs.com/addons/babylonjs.addons.min.js"></script>
+        <script src="https://cdn.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
 
-        // Контроллеры
-        const controls = new OrbitControls(camera, renderer.domElement);
-
-        // Загрузка 3D-модели (заменить "cat.obj" на файл печи)
-        const objLoader = new OBJLoader();
-        objLoader.load(
-            'https://threejsfundamentals.org/threejs/resources/models/windmill/windmill.obj',
-            (object) => {
-                scene.add(object);
-                object.position.y = -1; // Для удобного отображения
-            },
-            (xhr) => {
-                console.log(`Загрузка модели: ${((xhr.loaded / xhr.total) * 100).toFixed(2)}%`);
-            },
-            (error) => {
-                console.error('Ошибка загрузки модели:', error);
+        <style>
+            html,
+            body {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
             }
-        );
 
-        // Датчики
-        const sensors = [
-            { id: 1, position: { x: 1, y: 2, z: 0 }, name: "Sensor 1", piw: "PIW001", value: 35 },
-            { id: 2, position: { x: -2, y: 1, z: 1 }, name: "Sensor 2", piw: "PIW002", value: 45 },
-        ];
-
-        // Добавление сфер для датчиков
-        const sensorMeshes = [];
-        sensors.forEach((sensor) => {
-            const sphereGeometry = new THREE.SphereGeometry(0.1, 16, 16);
-            const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-            sphere.position.set(sensor.position.x, sensor.position.y, sensor.position.z);
-            scene.add(sphere);
-            sensorMeshes.push({ sensor, mesh: sphere });
-        });
-
-        // Обработка ошибок (пример: загорается красным при ошибке)
-        function updateSensorStatus() {
-            sensorMeshes.forEach(({ sensor, mesh }) => {
-                if (sensor.value > 40) {
-                    mesh.material.color.set(0xff0000); // Ошибка
-                } else {
-                    mesh.material.color.set(0x00ff00); // Норма
-                }
-            });
-        }
-
-        // Контекстное меню
-        const infoBox = document.getElementById('info-box');
-        window.addEventListener('click', (event) => {
-            const mouse = new THREE.Vector2(
-                (event.clientX / window.innerWidth) * 2 - 1,
-                -(event.clientY / window.innerHeight) * 2 + 1
-            );
-            const raycaster = new THREE.Raycaster();
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(sensorMeshes.map(({ mesh }) => mesh));
-
-            if (intersects.length > 0) {
-                const sensor = sensorMeshes.find(({ mesh }) => mesh === intersects[0].object).sensor;
-                infoBox.style.display = 'block';
-                infoBox.style.left = `${event.clientX}px`;
-                infoBox.style.top = `${event.clientY}px`;
-                infoBox.innerHTML = `
-                    <strong>${sensor.name}</strong><br>
-                    PIW: ${sensor.piw}<br>
-                    Current Value: ${sensor.value}<br>
-                    <button onclick="showDetails(${sensor.id})">Details</button>
-                `;
-            } else {
-                infoBox.style.display = 'none';
+            #renderCanvas {
+                width: 100%;
+                height: 100%;
+                touch-action: none;
             }
-        });
 
-        // Пример вызова дополнительных данных
-        window.showDetails = (sensorId) => {
-            const sensor = sensors.find((s) => s.id === sensorId);
-            alert(`Детальная информация о датчике ${sensor.name}`);
-        };
-
-        // Камера
-        camera.position.z = 5;
-
-        // Анимация
-        function animate() {
-            requestAnimationFrame(animate);
-            updateSensorStatus();
-            controls.update();
-            renderer.render(scene, camera);
-        }
-        animate();
-    </script>
-</body>
+            #canvasZone {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <div class="control_zone">
+            <input type="button" value="Wireframe [Z]" onclick="go_wireframe()"><br>
+            <input type="button" value="Go all ok [O]" onclick="reskin_sensors('default_material')"><br>
+            <input type="button" value="Go all error [V]" onclick="reskin_sensors('error_material')">
+        </div>
+        <div id="test"></div>
+        <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
+        <script src="zvd.js"></script>
+        <script src="bg.js"></script>
+        <script src="constants.js"></script>
+        <script src="sensors.js"></script>
+        <script src="main.js"></script>
+    </body>
 </html>
