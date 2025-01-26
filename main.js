@@ -19,6 +19,7 @@ function onMouseUpdate(e) {
 
 document.addEventListener('mousemove', onMouseUpdate, false);
 document.addEventListener('mouseenter', onMouseUpdate, false);
+addEventListener("resize", (event) => {error_buttons = []});
 
 function httpGet(theUrl)
 {
@@ -243,6 +244,10 @@ function create_error_lines() {
     let offset = 0
     df.querySelector('svg').innerHTML = ''
     let temp = []
+    let pos2 = {
+        _x: document.body.offsetWidth - ErrorLineOffsetRight,
+        _y: document.body.offsetHeight - ErrorLineOffsetBottom
+    }
     for (let x = 0; x < SENSORS.length; x++) {
         const element = SENSORS[x];
         if(element['error']){
@@ -256,10 +261,7 @@ function create_error_lines() {
                     engine.getRenderHeight(),
                 ),
             );
-            let pos2 = {
-                _x: window.screen.availWidth - 500,
-                _y: window.screen.availHeight - 200
-            }
+            
             if(cursor_x >= pos2._x && cursor_x <= pos2._x+WidthLine && cursor_y >= pos2._y - offset - 40 && cursor_y <= pos2._y - offset){
                 df.querySelector('svg').innerHTML = df.querySelector('svg').innerHTML + `
                 <line  style="cursor:pointer" id="theline" x1="${pos._x}" y1="${pos._y}" x2="${pos2._x}" y2="${pos2._y-offset}" stroke="red" stroke-width="2"/>`
@@ -277,10 +279,6 @@ function create_error_lines() {
             const element = temp1[x];
             console.log(element)
             element.remove()
-        }
-        let pos2 = {
-            _x: window.screen.availWidth - 500,
-            _y: window.screen.availHeight - 200
         }
         for (let x = 0; x < temp.length; x++) {
             const element = getSensorByPIW(temp[x]);
