@@ -1,5 +1,5 @@
 const DEBUG_FOR_SAVE_COORDS = false // Режим сохранения координат
-const load_obj_from_pastebin = true // Загружать завод с pastebin
+const load_obj_from_pastebin = false // Загружать завод с pastebin
 const pastebin_url = ''
 
 const idle_time = 7000 // Время после которого модель начнет крутиться (в МС)
