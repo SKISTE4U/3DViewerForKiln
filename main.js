@@ -221,6 +221,10 @@ var createScene = function () {
     return scene;
 };
 
+function getInfoAboutSensor(text) {
+    alert(text)
+}
+
 function create_error_lines() {
     let df = document.querySelector('#test')
     let offset = 0
@@ -262,6 +266,7 @@ function create_error_lines() {
             button.style.width = WidthLine+'px'
             button.style.height = offsetOfErrorLine + 'px'
             button.classList.add('sensor_error_button')
+            button.setAttribute('onclick',`alert('ff')`)
             document.body.appendChild(button)
         }
     }

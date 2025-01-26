@@ -115,4 +115,5 @@ svg{
 	text-align: left;
 	color: white;
 	border: none;
+	z-index: 3;
 }
