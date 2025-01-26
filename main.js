@@ -224,8 +224,12 @@ var createScene = function () {
 function create_error_lines() {
     let df = document.querySelector('#test')
     let offset = 0
-    console.clear()
     df.querySelector('svg').innerHTML = ''
+    let temp = document.querySelectorAll('.sensor_error_button')
+    for (let x = 0; x < temp.length; x++) {
+        const element = temp[x];
+        element.remove()
+    }
     for (let x = 0; x < SENSORS.length; x++) {
         const element = SENSORS[x];
         if(element['error']){
@@ -238,32 +242,27 @@ function create_error_lines() {
                     engine.getRenderHeight(),
                 ),
             );
-            // df.style.left = pos._x+'px'
-            // df.style.top = pos._y+'px'
             let pos2 = {
                 _x: window.screen.availWidth - 500,
                 _y: window.screen.availHeight - 200
             }
-            
-            console.log(`
-cursor_x (${cursor_x}) >= pos2._x (${pos2._x})
-cursor_x (${cursor_x}) <= pos2._x+200 (${pos2._x+200})
-cursor_y (${cursor_y}) >= pos2._y(${pos2._y}) - offset(${offset}) = ${pos2._y - offset}
-cursor_y (${cursor_y}) <= pos2._y (${pos2._y}) 
-                `)
-            // console.log(pos2)
-            if(cursor_x >= pos2._x &&
-                cursor_x <= pos2._x+200 &&
-                cursor_y >= pos2._y - offset - 40 &&
-                cursor_y <= pos2._y - offset
-            ){
+            if(cursor_x >= pos2._x && cursor_x <= pos2._x+WidthLine && cursor_y >= pos2._y - offset - 40 && cursor_y <= pos2._y - offset){
                 df.querySelector('svg').innerHTML = df.querySelector('svg').innerHTML + `
                 <line  style="cursor:pointer" id="theline" x1="${pos._x}" y1="${pos._y}" x2="${pos2._x}" y2="${pos2._y-offset}" stroke="red" stroke-width="2"/>`
             }
             df.querySelector('svg').innerHTML = df.querySelector('svg').innerHTML + `
-            <line  style="cursor:pointer" id="theline" x1="${pos2._x}" y1="${pos2._y-offset}" x2="${pos2._x+200}" y2="${pos2._y-offset}" stroke="red" stroke-width="2"/>
+            <line  style="cursor:pointer" id="theline" x1="${pos2._x}" y1="${pos2._y-offset}" x2="${pos2._x+WidthLine}" y2="${pos2._y-offset}" stroke="red" stroke-width="2"/>
             `
             offset += offsetOfErrorLine
+            let button = document.createElement('input')
+            button.type = 'button'
+            button.value = element.name.split('sensor_')[1] + ' | PIW: '+element['PIW']
+            button.style.top = pos2._y-offset+'px'
+            button.style.left = pos2._x+'px'
+            button.style.width = WidthLine+'px'
+            button.style.height = offsetOfErrorLine + 'px'
+            button.classList.add('sensor_error_button')
+            document.body.appendChild(button)
         }
     }
     

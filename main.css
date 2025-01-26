@@ -107,3 +107,12 @@ a, button, input, select {
 svg{
 	background: transparent;
 }
+.sensor_error_button{
+	position: absolute;
+	left: 100;
+	top: 0;
+	background: transparent;
+	text-align: left;
+	color: white;
+	border: none;
+}
