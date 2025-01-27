@@ -3,6 +3,7 @@ var canvas = document.getElementById("renderCanvas");
 var last_user_activity = 0
 var wireframe = true
 var error_buttons = []
+var debug = true
 
 var startRenderLoop = function (engine, canvas) {
     engine.runRenderLoop(function () {
@@ -15,8 +16,59 @@ var cursor_x, cursor_y;
 function onMouseUpdate(e) {
     cursor_x = e.pageX;
     cursor_y = e.pageY;
-  }
-
+}
+function change_debug_mode() {
+    let temp = document.querySelectorAll('.debug_mode')
+    if(debug){
+        for (let x = 0; x < temp.length; x++) {
+            const element = temp[x];
+            element.style.display = 'none'
+        }
+        debug = false
+    }
+    else{
+        for (let x = 0; x < temp.length; x++) {
+            const element = temp[x];
+            element.style.display = 'block'
+        }
+        debug = true
+    }
+}
+function change_sensor_status(elem,num) {
+    if(SENSORS[num].error){
+        SENSORS[num].error = false;
+        elem.style.background = 'rgba(90, 247, 150, 0.55)';
+    }
+    else{
+        SENSORS[num].error = true
+        elem.style.background = 'rgba(247, 90, 90, 0.55)';
+    }
+}
+function show_settings_sensors(){
+    let zone = document.querySelector('.sensors_zone').querySelector('.sensors')
+    zone.innerHTML = ''
+    document.querySelector('.sensors_zone').style.display = 'block'
+    for (let x = 0; x < SENSORS.length; x++) {
+        const element = SENSORS[x];
+        let div = document.createElement('div')
+        div.classList.add('one_sensor')
+        let color = 'white'
+        if(element.error){
+            color = 'rgba(247, 90, 90, 0.55)'
+        }
+        else{
+            color = 'rgba(90, 247, 150, 0.55)'
+        }
+        div.innerHTML = `
+        <div class="name">${element.name.split('sensor_')[1]}</div>
+                    <div class="piw">${element.PIW}</div>
+                    <div class="pdf_file">${element.pdf}</div>
+                    <div class="error">
+                        <input type="button" style='background:${color};' value="Сменить статус ошибки" onclick="change_sensor_status(this,${x})">
+                    </div>`
+        zone.appendChild(div)
+    }
+}
 document.addEventListener('mousemove', onMouseUpdate, false);
 document.addEventListener('mouseenter', onMouseUpdate, false);
 addEventListener("resize", (event) => {error_buttons = []});

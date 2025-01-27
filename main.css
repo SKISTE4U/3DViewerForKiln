@@ -132,3 +132,34 @@ svg{
 	width: 60px;
 	height: 20px;
 }
+.sensors_zone{
+	position: absolute;
+	left: 10%;
+	top:10%;
+	background: white;
+	color: black;
+	padding: 10px;
+	box-sizing: border-box;
+	display: none;
+	max-width: 40%;
+}
+.sensors_zone .header{
+	display: flex;
+	justify-content: space-between;
+	font-size: 20px;
+	border-bottom: 1px solid black;
+}
+.sensors_zone .sensors{
+	display: flex;
+	flex-direction: column;
+}
+.sensors_zone .sensors .one_sensor{
+	display: grid;
+	grid-template-columns: repeat(4,minmax(0,1fr));
+	gap: 20px;
+	border-bottom: 1px solid black;
+}
+.sensors_zone .sensors .one_sensor div{
+	padding-right: 3px;
+	border-right: 1px solid black;
+}

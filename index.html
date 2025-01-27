@@ -48,7 +48,23 @@
         <link rel="stylesheet" href="main.css">
     </head>
     <body>
-        <div id="fps"></div>
+        <div class="sensors_zone">
+            <div class="header">
+                <span>Датчики:</span>
+                <span style="font-weight: 900; user-select: none; cursor: pointer;" onclick="document.querySelector('.sensors_zone').style.display = 'none'">X</span>
+            </div>
+            <div class="sensors">
+                <div class="one_sensor">
+                    <div class="name">Temperature</div>
+                    <div class="piw">3452</div>
+                    <div class="pdf_file">temperature_23.pdf</div>
+                    <div class="error">
+                        <input type="button" value="Сменить статус ошибки">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="fps" class="debug_mode"></div>
         <div id="test">
             <svg id="svg" width="1920" height="1080">
             <line 
@@ -57,10 +73,12 @@
                 x1="23" y1="24" x2="87" y2="96" stroke="black" stroke-width="4"/>
             </svg>
         </div>
-        <div class="control_zone">
-            <input type="button" value="Wireframe [Z]" onclick="go_wireframe()"><br>
-            <input type="button" value="Go all ok [O]" onclick="reskin_sensors('default_material')"><br>
-            <input type="button" value="Go all error [V]" onclick="reskin_sensors('error_material')">
+        <div class="control_zone debug_mode">
+            <button accesskey="h" class="debug_mode" onclick="change_debug_mode()">Remove control [H]</button><br>
+            <input type="button" value="Wireframe" onclick="go_wireframe()"><br>
+            <input type="button" value="Go all ok" onclick="reskin_sensors('default_material')"><br>
+            <input type="button" value="Go all error" onclick="reskin_sensors('error_material')"><br>
+            <input type="button" value="Sensors DB" onclick="show_settings_sensors()">
         </div>
         <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
         <script src="zvd.js"></script>
