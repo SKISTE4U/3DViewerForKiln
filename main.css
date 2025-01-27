@@ -142,6 +142,8 @@ svg{
 	box-sizing: border-box;
 	display: none;
 	max-width: 40%;
+	max-height: 50%;
+	overflow-y: auto;
 }
 .sensors_zone .header{
 	display: flex;

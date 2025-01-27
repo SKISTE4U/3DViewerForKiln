@@ -108,13 +108,13 @@ function error_line_thread() {
 function go_wireframe() {
     for (let x = 0; x < window.scene.meshes.length; x++) {
         try{
-            console.log(wireframe)
+            // console.log(wireframe)
             const element = window.scene.meshes[x];
             element.material.wireframe = wireframe
             element.material.wireframe = wireframe
         }
         catch{
-            console.log('error')
+            // console.log('error')
         }
     }
     if(wireframe){wireframe=false}
@@ -189,9 +189,9 @@ var createScene = function () {
 
     BABYLON.SceneLoader.Append("", url, scene, function () {
         scene.ArcRotateCamera(true, true, true);
-        console.log('ff')
+        // console.log('ff')
         const names = scene.meshes.map(mesh => mesh.name);
-        console.log(names)
+        // console.log(names)
     }, undefined, undefined, ".glb");
 
     
@@ -205,6 +205,10 @@ var createScene = function () {
     setInterval(rotate,30)
     setInterval(checker_thread,checker_thread_time)
     // setInterval(error_line_thread,error_line_thread_time)
+
+    const light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, 3, 0), scene);
+    light.diffuse = new BABYLON.Color4(.2,0.2,0.2,1)
+    // light.specular = new BABYLON.Color3(0, 1, 0);
 
     // MATERIALS 
     default_material = new BABYLON.StandardMaterial(scene);
@@ -221,7 +225,7 @@ var createScene = function () {
         sphere.position.x = element['position'][0]
         sphere.position.y = element['position'][1]
         sphere.position.z = element['position'][2]
-        console.log(SENSORS[x])
+        // console.log(SENSORS[x])
         SENSORS[x]["sensor"] = sphere
         sphere.material = default_material
         sphere.isPickable = true
@@ -274,6 +278,7 @@ var createScene = function () {
         t += 0.05;
         var red = Math.cos(t) * 0.5 + 0.5;
         error_material.emissiveColor.r = red;
+        light.direction = global_camera.position
     });
     return scene;
 };
@@ -282,13 +287,21 @@ function getInfoAboutSensor(text) {
     alert(text)
 }
 
-function getSensorByPIW(PIW) {
+function getSensorNumberByPIW(PIW) {
     for (let x = 0; x < SENSORS.length; x++) {
         const element = SENSORS[x];
         if (PIW == element.PIW) {
-            return element
+            return x
         }
     }
+}
+
+function getSensorInfo(num) {
+    alert(`Инфа про датчик:
+PIW - ${SENSORS[num].PIW}
+Название - ${SENSORS[num].name}
+Пдфка - ${SENSORS[num].pdf}
+Координаты - ${SENSORS[num].position}`)
 }
 
 function create_error_lines() {
@@ -329,11 +342,12 @@ function create_error_lines() {
         let temp1 = document.querySelectorAll('.sensor_error_button')
         for (let x = 0; x < temp1.length; x++) {
             const element = temp1[x];
-            console.log(element)
+            // console.log(element)
             element.remove()
         }
         for (let x = 0; x < temp.length; x++) {
-            const element = getSensorByPIW(temp[x]);
+            let numb = getSensorNumberByPIW(temp[x]);
+            const element = SENSORS[numb]
             let button = document.createElement('input')
             button.type = 'button'
             button.value = element.name.split('sensor_')[1] + ' | PIW: '+element['PIW']
@@ -343,18 +357,16 @@ function create_error_lines() {
             button.style.width = WidthLine+'px'
             button.style.height = offsetOfErrorLine + 'px'
             button.classList.add('sensor_error_button')
-            button.setAttribute('onclick',`alert('ff')`)
+            button.setAttribute('onclick',`getSensorInfo(${numb})`)
             document.body.appendChild(button)
             offset += offsetOfErrorLine
         }
-        console.log(error_buttons)
-        console.log(temp)
+        // console.log(error_buttons)
+        // console.log(temp)
         if(error_buttons != temp){console.log('no')}
         error_buttons = temp
         
     }
-    
-    
 }
 window.initFunction = async function() {
     var asyncEngineCreation = async function() {
