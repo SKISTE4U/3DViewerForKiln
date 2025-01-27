@@ -119,6 +119,7 @@ svg{
 	color: white;
 	border: none;
 	z-index: 3;
+	word-wrap: break-word;
 }
 #fps {
 	position: absolute;
@@ -141,7 +142,7 @@ svg{
 	padding: 10px;
 	box-sizing: border-box;
 	display: none;
-	max-width: 40%;
+	max-width: 80%;
 	max-height: 50%;
 	overflow-y: auto;
 }
@@ -157,11 +158,12 @@ svg{
 }
 .sensors_zone .sensors .one_sensor{
 	display: grid;
-	grid-template-columns: repeat(4,minmax(0,1fr));
+	grid-template-columns: 1fr 1fr 1fr .1fr;
 	gap: 20px;
 	border-bottom: 1px solid black;
 }
 .sensors_zone .sensors .one_sensor div{
 	padding-right: 3px;
 	border-right: 1px solid black;
+	word-wrap: break-word;
 }

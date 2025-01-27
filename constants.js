@@ -12,7 +12,7 @@ const lowerBeta = .5                         // Минимальный угол 
 const upperBeta = 1.8                        // Максимальный угол вертикального поворота камеры
 
 const wheelPrecision = 2                     // Zoom Scale
-const offsetOfErrorLine = 40                 // Высота линий ошибок
+const offsetOfErrorLine = 30                // Высота линий ошибок
 const WidthLine = 200                        // Ширина линий ошибок
 const SensorsDiameter = .5                   // Диаметр создаваемых сфер
 

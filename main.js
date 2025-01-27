@@ -5,6 +5,19 @@ var wireframe = true
 var error_buttons = []
 var debug = true
 
+// Добавление хоткеев
+// document.addEventListener
+//     (
+//         'keydown',
+//         (e) =>
+//         {
+//         if(e.keyCode == 87){isWPressed=true;}
+//         if(e.keyCode == 65){isAPressed=true;}
+//         if(e.keyCode == 83){isSPressed = true;}
+//         if(e.keyCode == 68){isDPressed=true;}
+//         }
+//     );
+
 var startRenderLoop = function (engine, canvas) {
     engine.runRenderLoop(function () {
         if (sceneToRender && sceneToRender.activeCamera) {
@@ -64,7 +77,7 @@ function show_settings_sensors(){
                     <div class="piw">${element.PIW}</div>
                     <div class="pdf_file">${element.pdf}</div>
                     <div class="error">
-                        <input type="button" style='background:${color};' value="Сменить статус ошибки" onclick="change_sensor_status(this,${x})">
+                        <input type="button" style='background:${color};' value="ошибка" onclick="change_sensor_status(this,${x})">
                     </div>`
         zone.appendChild(div)
     }
@@ -105,6 +118,9 @@ function error_line_thread() {
     ]
     BABYLON.MeshBuilder.CreateLineSystem(null, {instance: error_line, lines: lines})
 }
+function randint(min, max) {
+    return parseInt(Math.random() * (max - min) + min)
+  }
 function go_wireframe() {
     for (let x = 0; x < window.scene.meshes.length; x++) {
         try{
@@ -159,7 +175,6 @@ var scene = null;
 var sceneToRender = null;
 var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
 var createScene = function () {
-
     var scene = new BABYLON.Scene(engine);
     scene.createDefaultCameraOrLight(true, true, true);
     global_camera = scene.getCameraByID("default camera");
@@ -218,6 +233,8 @@ var createScene = function () {
     error_material = new BABYLON.StandardMaterial("", scene);
     error_material.emissiveColor = new BABYLON.Color3(0, 0.3, 0);
     error_material.disableLighting = true;
+    error_material.emissiveColor.g = 0;
+    error_material.hasAlpha = true
 
     for (let x = 0; x < SENSORS.length; x++) {
         const element = SENSORS[x];
@@ -243,31 +260,48 @@ var createScene = function () {
     if (DEBUG_FOR_SAVE_COORDS){
         let vector = { x:'', y:'', z:'' };
             scene.onPointerDown = function (event, pickResult){
-                //left mouse click
-                if (pickResult.hit) {
-                    if(pickResult.pickedMesh.name.startsWith('sensor_')){alert(pickResult.pickedMesh.name)}
-                    console.log(pickResult)
+                try{
+                    //left mouse click
+                    if (pickResult.hit) {
+                        if(pickResult.pickedMesh.name.startsWith('sensor_')){alert(pickResult.pickedMesh.name)}
+                        console.log(pickResult)
+                    }
+                    if(event.button == 0){
+                            vector = pickResult.pickedPoint;
+                            console.log('left mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
+                    }
+                    //right mouse click
+                    if(event.button == 2){
+                            vector.x = pickResult.pickedPoint.x;
+                            vector.y = pickResult.pickedPoint.y;
+                            vector.z = pickResult.pickedPoint.z;
+                            console.log('right mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
+                    }
+                    //Wheel button or middle button on mouse click
+                    if(event.button == 1){
+                            vector['x'] = pickResult.pickedPoint['x'];
+                            vector['y'] = pickResult.pickedPoint['y'];
+                            vector['z'] = pickResult.pickedPoint['z'];
+                            console.log('middle mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
+                    }
+                    let text = `{'name':'sensor_RENAME_ME','PIW':${randint(0,100000)},'error':false,'position':[${vector['x']},${vector['y']},${vector['z']}],'pdf':'RENAME_ME.pdf'},`
+                    unsecuredCopyToClipboard(text);
+
+                    let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {diameter: SensorsDiameter, segments: 6}, scene);
+                    sphere.position.x = vector['x']
+                    sphere.position.y = vector['y']
+                    sphere.position.z = vector['z']
+                    // console.log(SENSORS[x])
+                    sphere.material = default_material
+                    sphere.isPickable = true
+
+                    alert('Скопирован датчик для вставки в базу данных:\n'+text)
                 }
-                if(event.button == 0){
-                        vector = pickResult.pickedPoint;
-                        console.log('left mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
+                catch(error){
+                    console.log(error)
                 }
-                //right mouse click
-                if(event.button == 2){
-                        vector.x = pickResult.pickedPoint.x;
-                        vector.y = pickResult.pickedPoint.y;
-                        vector.z = pickResult.pickedPoint.z;
-                        console.log('right mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
-                }
-                //Wheel button or middle button on mouse click
-                if(event.button == 1){
-                        vector['x'] = pickResult.pickedPoint['x'];
-                        vector['y'] = pickResult.pickedPoint['y'];
-                        vector['z'] = pickResult.pickedPoint['z'];
-                        console.log('middle mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
-                }
-                // navigator.clipboard.writeText(`${vector['x']},${vector['y']},${vector['z']}`);
-        }
+
+            }
     }
 
     setInterval(create_error_lines,error_line_thread_time)
@@ -277,11 +311,27 @@ var createScene = function () {
     scene.registerBeforeRender(() => {
         t += 0.05;
         var red = Math.cos(t) * 0.5 + 0.5;
+        var gr = Math.cos(t) * 0.5 - 0.5;
         error_material.emissiveColor.r = red;
+        error_material.emissiveColor.g = gr*-1;
         light.direction = global_camera.position
     });
     return scene;
 };
+
+function unsecuredCopyToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      console.error('Unable to copy to clipboard', err);
+    }
+    document.body.removeChild(textArea);
+  }
 
 function getInfoAboutSensor(text) {
     alert(text)
@@ -327,9 +377,9 @@ function create_error_lines() {
                 ),
             );
             
-            if(cursor_x >= pos2._x && cursor_x <= pos2._x+WidthLine && cursor_y >= pos2._y - offset - 40 && cursor_y <= pos2._y - offset){
+            if(cursor_x >= pos2._x && cursor_x <= pos2._x+WidthLine && cursor_y >= pos2._y - offset - offsetOfErrorLine && cursor_y <= pos2._y - offset){
                 df.querySelector('svg').innerHTML = df.querySelector('svg').innerHTML + `
-                <line  style="cursor:pointer" id="theline" x1="${pos._x}" y1="${pos._y}" x2="${pos2._x}" y2="${pos2._y-offset}" stroke="red" stroke-width="2"/>`
+                <line  style="cursor:pointer" id="theline" x1="${pos._x}" y1="${pos._y}" x2="${pos2._x}" y2="${pos2._y-offset}" stroke="red" stroke-width="2" stroke-opacity="50%" />`
             }
             df.querySelector('svg').innerHTML = df.querySelector('svg').innerHTML + `
             <line  style="cursor:pointer" id="theline" x1="${pos2._x}" y1="${pos2._y-offset}" x2="${pos2._x+WidthLine}" y2="${pos2._y-offset}" stroke="red" stroke-width="2"/>
@@ -338,7 +388,7 @@ function create_error_lines() {
         }
     }
     if(!isArraysEqual(error_buttons, temp)){
-        offset = 40
+        offset = offsetOfErrorLine
         let temp1 = document.querySelectorAll('.sensor_error_button')
         for (let x = 0; x < temp1.length; x++) {
             const element = temp1[x];
