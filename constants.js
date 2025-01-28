@@ -1,4 +1,4 @@
-const DEBUG_FOR_SAVE_COORDS = true         // Режим сохранения координат
+const DEBUG_FOR_SAVE_COORDS = false         // Режим сохранения координат
 const load_obj_from_pastebin = false        // Загружать завод с pastebin
 const pastebin_url = ''
 // const hotkey_for_debug = 'h'                // Alt+Shift+Эта кнопка показывает кнопки управления

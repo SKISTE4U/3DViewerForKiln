@@ -365,11 +365,13 @@ function getSensorNumberByPIW(PIW) {
 }
 
 function getSensorInfo(num) {
-    alert(`Инфа про датчик:
-PIW - ${SENSORS[num].PIW}
-Название - ${SENSORS[num].name}
-Пдфка - ${SENSORS[num].pdf}
-Координаты - ${SENSORS[num].position}`)
+//     alert(`Инфа про датчик:
+// PIW - ${SENSORS[num].PIW}
+// Название - ${SENSORS[num].name}
+// Пдфка - ${SENSORS[num].pdf}
+// Координаты - ${SENSORS[num].position}`)
+    let pdf_path = window.location.origin+'/pdf/'+SENSORS[num]['pdf']
+    window.open(pdf_path, '_blank').focus();
 }
 
 function create_error_lines() {

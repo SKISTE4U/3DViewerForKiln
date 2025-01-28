@@ -80,11 +80,12 @@
             </svg>
         </div>
         <div class="control_zone debug_mode">
-            <button accesskey="h" class="debug_mode" onclick="change_debug_mode()">Remove control [H]</button><br>
+            <button accesskey="h" onclick="change_debug_mode()">Remove control [H]</button><br>
             <input type="button" value="Wireframe" onclick="go_wireframe()"><br>
             <input type="button" value="Go all ok" onclick="reskin_sensors('default_material')"><br>
             <input type="button" value="Go all error" onclick="reskin_sensors('error_material')"><br>
             <input type="button" value="Sensors DB" onclick="show_settings_sensors()">
+            <button accesskey="р" style="display:none" onclick="change_debug_mode()"></button><br>
         </div>
         <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
         <script src="zvd.js"></script>
