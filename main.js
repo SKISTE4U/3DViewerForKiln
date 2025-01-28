@@ -265,7 +265,15 @@ var createScene = function () {
         }
     });
 
-    // START ALL ANIMS
+    scene.onPointerDown = function (evt, pickResult) {
+        // We try to pick an object
+        if (pickResult.hit) {
+            console.log(pickResult.pickedMesh.name)
+            if(pickResult.pickedMesh.name.startsWith('sensor_')){
+                alert(pickResult.pickedMesh.name.split('sensor_')[1])
+            }
+        }
+    };
 
     document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps";
     if (DEBUG_FOR_SAVE_COORDS){
