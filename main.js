@@ -103,7 +103,7 @@ function httpGet(theUrl)
 }
 function rotate() {
     if ((Date.now() - last_user_activity) > idle_time){
-        global_camera.alpha += .01
+        global_camera.alpha += .005
     }
 }
 function checker_thread() {
@@ -264,6 +264,8 @@ var createScene = function () {
         }
     });
 
+    // START ALL ANIMS
+
     document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps";
     if (DEBUG_FOR_SAVE_COORDS){
         let vector = { x:'', y:'', z:'' };
@@ -313,6 +315,14 @@ var createScene = function () {
     }
 
     setInterval(create_error_lines,error_line_thread_time)
+
+    setTimeout(function () {
+        scene.animationGroups.forEach((animatioName)=>{
+            const animationType = scene.getAnimationGroupByName(animatioName.name);
+            // console.log(animatioName)
+            animationType.start(true, 1.0, animationType.from, animationType.to, false)
+        })
+    },reklama_time-500)
 
     // Create blinking material
     var t = 0;
