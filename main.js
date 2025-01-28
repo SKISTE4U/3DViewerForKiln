@@ -27,7 +27,8 @@ var startRenderLoop = function (engine, canvas) {
 }
 setTimeout(function() {
     let temp = document.querySelector('.reklama')
-    temp.style.animation = 'remove 1s ease-in-out forwards'
+    temp.style.animation = 'opacity_low 1s ease-in-out forwards'
+    temp.querySelector('.logo').style.animation = 'remove 1s ease-in-out forwards'
 },reklama_time)
 setTimeout(function() {
     let temp = document.querySelector('.reklama')
