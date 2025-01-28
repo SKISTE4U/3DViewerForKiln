@@ -167,3 +167,39 @@ svg{
 	border-right: 1px solid black;
 	word-wrap: break-word;
 }
+.reklama{
+	width: 100vw;
+	position: absolute;
+	height: 100vh;
+	background: white;
+	z-index: 999;
+	color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	user-select: none;
+	/* animation: remove 1s ease-in-out forwards; */
+	opacity: 1;
+}
+.reklama .logo{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+.reklama .logo span{
+	background: black;
+	color: white;
+	font-size: 30px;
+	padding: 10px;
+	font-family: Impact, sans-serif;
+}
+@keyframes remove {
+	0%{
+		opacity: 1;
+		transform: scale(1);
+	}
+	100%{
+		opacity: 0;
+		transform: scale(1.5);
+	}
+}

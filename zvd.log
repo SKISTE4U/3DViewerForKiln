@@ -9,42 +9,42 @@ Exporter version: 3.3.2, Blender version: 4.3.2
 		Vert Color Precision:  3
 		Mat Weight Precision:  2
 		Keep Z-up r-handed  :  no
-		Texture directory   :  D:\My Examples\MZBalakovo\3DViewerForKiln\
+		Texture directory   :  C:\Users\MZ_Penka\Desktop\3DViewerForKiln\3DViewerForKiln\
 	Python World class constructor completed
 	WARNING: No active camera has been assigned, or is not in a currently enabled collection
 	processing begun of mesh:  Куб
 		processing begun of material:  Материал.026
 ========= An error was encountered =========
-  File "C:\Users\skist\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\json_exporter.py", line 118, in execute
+  File "C:\Users\MZ_Penka\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\json_exporter.py", line 118, in execute
     mesh = Mesh(object, scene, self)
            ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\skist\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\mesh.py", line 151, in __init__
+  File "C:\Users\MZ_Penka\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\mesh.py", line 151, in __init__
     recipe = BakingRecipe(bpyMesh, exporter)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\skist\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\baking_recipe.py", line 43, in __init__
+  File "C:\Users\MZ_Penka\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\baking_recipe.py", line 43, in __init__
     bjsMaterial = BJSMaterial(bpyMaterial, exporter)
                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\skist\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\material.py", line 109, in __init__
+  File "C:\Users\MZ_Penka\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\material.py", line 109, in __init__
     self.bjsNodeTree = AbstractBJSNode.readMaterialNodeTree(bpyMaterial.node_tree, self.overloadChannels)
                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\skist\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\abstract.py", line 265, in readMaterialNodeTree
+  File "C:\Users\MZ_Penka\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\abstract.py", line 265, in readMaterialNodeTree
     return AbstractBJSNode.readNodeTree(node_tree, 'ShaderNodeOutputMaterial', overloadChannels)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\skist\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\abstract.py", line 285, in readNodeTree
+  File "C:\Users\MZ_Penka\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\abstract.py", line 285, in readNodeTree
     return AbstractBJSNode(output, topLevelId, overloadChannels)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\skist\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\abstract.py", line 84, in __init__
+  File "C:\Users\MZ_Penka\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\abstract.py", line 84, in __init__
     bjsWrapperNode = AbstractBJSNode.GetBJSWrapperNode(nodeSocket.links[0].from_node, nodeSocket.name, overloadChannels)
                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\skist\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\abstract.py", line 335, in GetBJSWrapperNode
+  File "C:\Users\MZ_Penka\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\abstract.py", line 335, in GetBJSWrapperNode
     return PrincipledBJSNode(bpyNode, socketName, overloadChannels)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\skist\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\principled.py", line 25, in __init__
+  File "C:\Users\MZ_Penka\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\principled.py", line 25, in __init__
     subsurface = self.getDefault('Subsurface')
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\skist\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\abstract.py", line 217, in getDefault
+  File "C:\Users\MZ_Penka\AppData\Roaming\Blender Foundation\Blender\4.3\scripts\addons\babylon_js\materials\nodes\abstract.py", line 217, in getDefault
     return self.defaults[socketName]
            ~~~~~~~~~~~~~^^^^^^^^^^^^
 ERROR:  'Subsurface'
 ========= end of processing =========
-elapsed time:  0 min, 0.0563 secs
+elapsed time:  0 min, 0.0524 secs

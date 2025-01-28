@@ -18,3 +18,5 @@ const SensorsDiameter = .5                   // Диаметр создавае�
 
 const ErrorLineOffsetRight = 250             // Отступ линий ошибок справа
 const ErrorLineOffsetBottom = 50             // Отступ линий ошибок снизу
+
+const reklama_time = 1500                    // Время рекламы в МС

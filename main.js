@@ -25,6 +25,14 @@ var startRenderLoop = function (engine, canvas) {
         }
     });
 }
+setTimeout(function() {
+    let temp = document.querySelector('.reklama')
+    temp.style.animation = 'remove 1s ease-in-out forwards'
+},reklama_time)
+setTimeout(function() {
+    let temp = document.querySelector('.reklama')
+    temp.style.display = 'none'
+},reklama_time+1000)
 var cursor_x, cursor_y;
 function onMouseUpdate(e) {
     cursor_x = e.pageX;
