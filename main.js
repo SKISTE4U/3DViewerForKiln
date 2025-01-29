@@ -1,3 +1,6 @@
+// import * as BABYLON from './node_modules/@babylonjs/core';
+// const BABYLON = import('@babylonjs/core/Legacy/legacy')
+
 var canvas = document.getElementById("renderCanvas");
 
 var last_user_activity = 0
