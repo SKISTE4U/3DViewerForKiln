@@ -8,6 +8,7 @@ const  Vector3 = import ("./node_modules/@babylonjs/core/Maths/math.js")
 const  HemisphericLight = import ("./node_modules/@babylonjs/core/Lights/hemisphericLight.js")
 const  MeshBuilder = import ("./node_modules/@babylonjs/core/Meshes/meshBuilder.js")
 const  StandardMaterial = import ("./node_modules/@babylonjs/core/Materials/standardMaterial.js")
+const  particleSystem = import ("./node_modules/@babylonjs/core/Particles/particleSystem.js")
 
 
 var canvas = document.getElementById("renderCanvas");
@@ -240,6 +241,19 @@ var createScene = function () {
 
     setInterval(rotate,30)
     setInterval(checker_thread,checker_thread_time)
+
+    // Smoke
+    const particleSystem = new BABYLON.ParticleSystem("particles", 2000);
+    particleSystem.particleTexture = new BABYLON.Texture("files/smoke.png");
+    // Position where the particles are emiited from
+    particleSystem.emitter = new BABYLON.Vector3(4.504145333060981,50.531755720584904,-7.312920189767313);
+    particleSystem.minLifeTime = 0.3;
+    particleSystem.maxLifeTime = 1.5;
+    particleSystem.emitRate = 20;
+    particleSystem.direction1 = new BABYLON.Vector3(0, 4, 0);
+    // particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+    particleSystem.start();;
+    
     // setInterval(error_line_thread,error_line_thread_time)
 
     const light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, 3, 0), scene);

@@ -40,7 +40,7 @@ var SENSORS = [
     {'name':'sensor_Шуточки','PIW':84457,'error':false,'position':[5.363231446687905,7.137314808037857,-11.413182959566374],'pdf':'RENAME_ME.pdf'},
     {'name':'sensor_Шуточки','PIW':56214,'error':false,'position':[5.363231523227753,7.690902694464956,-10.791565169129736],'pdf':'RENAME_ME.pdf'},
     {'name':'sensor_Шуточки','PIW':29995,'error':false,'position':[5.363231598149369,8.405907087396852,-10.392935173988208],'pdf':'RENAME_ME.pdf'},
-    {'name':'sensor_RENAME_ME','PIW':81485,'error':true,'position':[4.504145333060981,50.531755720584904,-7.312920189767313],'pdf':'2d model zvd.pdf'},
+    // {'name':'sensor_RENAME_ME','PIW':81485,'error':true,'position':[4.504145333060981,50.531755720584904,-7.312920189767313],'pdf':'2d model zvd.pdf'},
 
 
 ]
