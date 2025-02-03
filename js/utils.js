@@ -145,31 +145,39 @@ function change_sensor_status(elem,num) {
 }
 
 // Показать уведомление при нажатии на датчик
-function show_popup(sensor) {
+function show_popup(sensor = null, justPopup = false,text = 'EDIT ME') {
     console.log('show_popup')
     let div = document.createElement('div')
     div.classList.add('popup')
-    div.style.top = cursor_y - (popup_size[1]+20) + 'px'
-    div.style.left = cursor_x - (popup_size[0]/2) +'px'
+    // div.style.top = cursor_y - (popup_size[1]+20) + 'px'
+    // div.style.left = cursor_x - (popup_size[0]/2) +'px'
+    div.style.top = 10 + 'px'
+    div.style.left = document.body.offsetWidth - (popup_size[0]+10) + 'px'
     div.style.width = popup_size[0] + 'px'
     div.style.height = popup_size[1] + 'px'
-    let name = sensor.name.split('sensor_')[1].split(';')[0]
-    let piw = sensor.name.split('sensor_')[1].split(';')[1]
-    div.innerHTML = '<div class="name">'+name+'<br>PIW: '+piw+'</div><div class="triangle"></div>'
     div.style.animation = 'show_popup .5s ease-in-out forwards'
-    let interval = setInterval(function () {
-        const pos = BABYLON.Vector3.Project(
-            sensor.getAbsolutePosition(),
-            BABYLON.Matrix.IdentityReadOnly,
-            scene.getTransformMatrix(),
-            global_camera.viewport.toGlobal(
-                engine.getRenderWidth(),
-                engine.getRenderHeight(),
-            ),
-        );
-        div.style.left = pos._x - (popup_size[0]/2) +'px'
-        div.style.top = pos._y - (popup_size[1]+20) + 'px'
-    },popup_moving_thread_time)
+
+    if(!justPopup){
+        let name = sensor.name.split('sensor_')[1].split(';')[0]
+        let piw = sensor.name.split('sensor_')[1].split(';')[1]
+        div.innerHTML = '<div class="name">'+name+'<br>PIW: '+piw+'</div><div class="triangle"></div>'
+        let interval = setInterval(function () {
+            const pos = BABYLON.Vector3.Project(
+                sensor.getAbsolutePosition(),
+                BABYLON.Matrix.IdentityReadOnly,
+                scene.getTransformMatrix(),
+                global_camera.viewport.toGlobal(
+                    engine.getRenderWidth(),
+                    engine.getRenderHeight(),
+                ),
+            );
+            div.style.left = pos._x - (popup_size[0]/2) +'px'
+            div.style.top = pos._y - (popup_size[1]+20) + 'px'
+        },popup_moving_thread_time)
+    }
+    else{
+        div.innerHTML = '<div class="name">'+text+'</div><div class="triangle"></div>'
+    }
     setTimeout(function () {
         div.style.animation = 'close_popup .5s ease-in-out forwards'
     },popup_livetime)

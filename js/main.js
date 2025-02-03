@@ -151,7 +151,7 @@ var createScene = function () {
         let pickResult = scene.pick(scene.pointerX, scene.pointerY);
 
         if(pickResult.pickedMesh.name.startsWith('sensor_')){
-            show_popup(pickResult.pickedMesh)
+            show_popup(sensor = pickResult.pickedMesh)
         }
 
         const ray = scene.createPickingRay(scene.pointerX, scene.pointerY, BABYLON.Matrix.Identity(), global_camera);
@@ -164,7 +164,7 @@ var createScene = function () {
             for (let x = 0; x < hits.length; x++) {
                 const element = hits[x];
                 if(element.pickedMesh.name.startsWith('sensor_') && element.pickedMesh.SKISTE_is_error){
-                    show_popup(element.pickedMesh)
+                    show_popup(sensor = element.pickedMesh)
                     break
                 }
                 console.log("- Меш:", element.pickedMesh.name);
@@ -173,52 +173,53 @@ var createScene = function () {
     };
 
     document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps";
-    if (DEBUG_FOR_SAVE_COORDS){
         let vector = { x:'', y:'', z:'' };
             scene.onPointerDown = function (event, pickResult){
                 try{
+                    if (DEBUG_FOR_SAVE_COORDS){
                     //left mouse click
-                    if (pickResult.hit) {
-                        if(pickResult.pickedMesh.name.startsWith('sensor_')){alert(pickResult.pickedMesh.name)}
-                        console.log(pickResult)
-                    }
-                    if(event.button == 0){
-                            vector = pickResult.pickedPoint;
-                            console.log('left mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
-                    }
-                    //right mouse click
-                    if(event.button == 2){
-                            vector.x = pickResult.pickedPoint.x;
-                            vector.y = pickResult.pickedPoint.y;
-                            vector.z = pickResult.pickedPoint.z;
-                            console.log('right mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
-                    }
-                    //Wheel button or middle button on mouse click
-                    if(event.button == 1){
-                            vector['x'] = pickResult.pickedPoint['x'];
-                            vector['y'] = pickResult.pickedPoint['y'];
-                            vector['z'] = pickResult.pickedPoint['z'];
-                            console.log('middle mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
-                    }
-                    let rand_int = randint(0,100000)
-                    let text = `{'name':'sensor_RENAME_ME','PIW':${rand_int},'error':false,'position':[${vector['x']},${vector['y']},${vector['z']}],'pdf':'RENAME_ME.pdf'},`
-                    unsecuredCopyToClipboard(text);
+                        if (pickResult.hit) {
+                            if(pickResult.pickedMesh.name.startsWith('sensor_')){alert(pickResult.pickedMesh.name)}
+                            console.log(pickResult)
+                        }
+                        if(event.button == 0){
+                                vector = pickResult.pickedPoint;
+                                console.log('left mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
+                        }
+                        //right mouse click
+                        if(event.button == 2){
+                                vector.x = pickResult.pickedPoint.x;
+                                vector.y = pickResult.pickedPoint.y;
+                                vector.z = pickResult.pickedPoint.z;
+                                console.log('right mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
+                        }
+                        //Wheel button or middle button on mouse click
+                        if(event.button == 1){
+                                vector['x'] = pickResult.pickedPoint['x'];
+                                vector['y'] = pickResult.pickedPoint['y'];
+                                vector['z'] = pickResult.pickedPoint['z'];
+                                console.log('middle mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
+                        }
+                        let rand_int = randint(0,100000)
+                        let text = `{'name':'sensor_RENAME_ME','PIW':${rand_int},'error':false,'position':[${vector['x']},${vector['y']},${vector['z']}],'pdf':'RENAME_ME.pdf'},`
+                        unsecuredCopyToClipboard(text);
 
-                    let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {diameter: SensorsDiameter, segments: 6}, scene);
-                    sphere.position.x = vector['x']
-                    sphere.position.y = vector['y']
-                    sphere.position.z = vector['z']
-                    // console.log(SENSORS[x])
-                    sphere.material = default_material
-                    sphere.isPickable = true
+                        let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {diameter: SensorsDiameter, segments: 6}, scene);
+                        sphere.position.x = vector['x']
+                        sphere.position.y = vector['y']
+                        sphere.position.z = vector['z']
+                        // console.log(SENSORS[x])
+                        sphere.material = default_material
+                        sphere.isPickable = true
 
-                    alert('Скопирован датчик для вставки в базу данных:\n'+text)
+                        // alert('Скопирован датчик для вставки в базу данных:\n'+text)
+                        show_popup(null,justPopup=true,text='Датчик успешно скопирован в буфер обмена')
+                    }
                 }
                 catch(error){
                     console.log(error)
                 }
 
-            }
     }
 
     setInterval(create_error_lines,error_line_thread_time)
