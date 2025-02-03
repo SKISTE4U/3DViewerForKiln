@@ -20,7 +20,7 @@ function httpGet(theUrl)
 // Прокрутка камеры пока пользователь афк
 function rotate() {
     if ((Date.now() - last_user_activity) > idle_time){
-        global_camera.alpha += .005
+        global_camera.alpha += camera_alpha
     }
 }
 

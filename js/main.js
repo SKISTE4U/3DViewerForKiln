@@ -94,7 +94,7 @@ var createScene = function () {
     var layer = new BABYLON.Layer('',url, scene, true);
 
 
-    setInterval(rotate,30)
+    setInterval(rotate,rotate_thread_interval)
     setInterval(checker_thread,checker_thread_time)
 
     // Smoke

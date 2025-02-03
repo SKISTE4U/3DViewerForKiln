@@ -3,6 +3,9 @@ const load_obj_from_pastebin = false        // Загружать завод с 
 const pastebin_url = ''
 // const hotkey_for_debug = 'h'             // Alt+Shift+Эта кнопка показывает кнопки управления
 
+const camera_alpha = 0.0015                 // Угол насколько камера поворачивается, лучшее 0.005, при интервале в 30мс
+const rotate_thread_interval = 1            // в МС, насколько часто будет обновлятся поворот камеры
+
 const idle_time = 7000                      // Время после которого модель начнет крутиться (в МС)
 const checker_thread_time = 1000            // Перерыв через сколько будут проверятся датчики
 const error_line_thread_time = 25           // Как часто будет обновляться полоска ошибки к датчику
