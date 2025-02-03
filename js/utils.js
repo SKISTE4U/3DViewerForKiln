@@ -200,10 +200,12 @@ function show_settings(elem,isShowing) {
         elem.setAttribute('onclick','show_settings(this,false)')
         document.querySelector('.close_button').querySelector('img').style.animation = 'open_settings_button .5s ease-in-out forwards'
         document.querySelector('.settings').style.animation = 'show_settings .5s ease-in-out forwards'
+        document.querySelector('.close_button').style.opacity = '1'
     }
     else{
         elem.setAttribute('onclick','show_settings(this,true)')
         document.querySelector('.close_button').querySelector('img').style.animation = 'closing_settings_button .5s ease-in-out forwards'
+        document.querySelector('.close_button').style.opacity = '.1'
         document.querySelector('.settings').style.animation = 'close_settings .5s ease-in-out forwards'
     }
 }

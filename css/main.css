@@ -230,6 +230,7 @@ svg{
 	flex-direction: column;
 	width: 35px;
 	left: 10px;
+	top: 10px;
 	position: relative;
 }
 .openCloseSettings img{
@@ -242,6 +243,13 @@ svg{
 }
 .openCloseSettings .one_button{
 	cursor: pointer;
+}
+.openCloseSettings .close_button:hover{
+	opacity: 1 !important;
+}
+.openCloseSettings .close_button{
+	opacity: .1;
+	transition: all .3s;
 }
 .openCloseSettings .close_button img{
 	animation: closing_settings_button .5s ease-in-out forwards;
