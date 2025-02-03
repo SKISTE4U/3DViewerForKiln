@@ -1,14 +1,27 @@
 // import * as BABYLON from './node_modules/@babylonjs/core/Legacy/legacy';
 // const BABYLON = import('@babylonjs/core/Legacy/legacy')
 // const Scene = import("./node_modules/@babylonjs/core/scene.js")
-const  Scene = import ("./node_modules/@babylonjs/core/scene.js")
-const  Engine = import ("./node_modules/@babylonjs/core/Engines/engine.js")
-const  FreeCamera = import ("./node_modules/@babylonjs/core/Cameras/freeCamera.js")
-const  Vector3 = import ("./node_modules/@babylonjs/core/Maths/math.js")
-const  HemisphericLight = import ("./node_modules/@babylonjs/core/Lights/hemisphericLight.js")
-const  MeshBuilder = import ("./node_modules/@babylonjs/core/Meshes/meshBuilder.js")
-const  StandardMaterial = import ("./node_modules/@babylonjs/core/Materials/standardMaterial.js")
-const  particleSystem = import ("./node_modules/@babylonjs/core/Particles/particleSystem.js")
+// import BABYLON from 'babylonjs';
+
+// const BABYLON = import('./node_modules/@babylonjs/core/Legacy/legacy.js')
+// const  Scene = import ("./node_modules/@babylonjs/core/scene.js")
+// const  Engine = import ("./node_modules/@babylonjs/core/Engines/engine.js")
+// const  FreeCamera = import ("./node_modules/@babylonjs/core/Cameras/freeCamera.js")
+// const  Vector3 = import ("./node_modules/@babylonjs/core/Maths/math.js")
+// const  HemisphericLight = import ("./node_modules/@babylonjs/core/Lights/hemisphericLight.js")
+// const  MeshBuilder = import ("./node_modules/@babylonjs/core/Meshes/meshBuilder.js")
+// const  StandardMaterial = import ("./node_modules/@babylonjs/core/Materials/standardMaterial.js")
+// const  particleSystem = import ("./node_modules/@babylonjs/core/Particles/particleSystem.js")
+
+// const BABYLON = {'Scene':Scene,
+//     "Engine":Engine,
+//     "FreeCamera":FreeCamera,
+//     'Vector3':Vector3,
+//     'HemisphericLight':HemisphericLight,
+//     'MeshBuilder':MeshBuilder,
+//     'StandardMaterial':StandardMaterial,
+//     'particleSystem':particleSystem,
+// }
 
 
 var canvas = document.getElementById("renderCanvas");
@@ -229,7 +242,9 @@ var createScene = function () {
         // console.log('ff')
         const names = scene.meshes.map(mesh => mesh.name);
         // console.log(names)
-    }, undefined, undefined, ".glb");
+    }, undefined, undefined, ".gltf");
+    // BABYLON.SceneLoader.Append(base64_model_content, scene, { pluginExtension: 'glb'})
+    // BABYLON.SceneLoader.Append('',url,scene)
 
     
     // scene.meshes[1].material = error_material
