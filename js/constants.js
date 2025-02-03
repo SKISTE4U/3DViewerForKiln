@@ -1,4 +1,4 @@
-const DEBUG_FOR_SAVE_COORDS = false         // Режим сохранения координат
+var DEBUG_FOR_SAVE_COORDS = false           // Режим сохранения координат
 const load_obj_from_pastebin = false        // Загружать завод с pastebin
 const pastebin_url = ''
 // const hotkey_for_debug = 'h'             // Alt+Shift+Эта кнопка показывает кнопки управления
@@ -19,8 +19,8 @@ const SensorsDiameter = .5                  // Диаметр создаваем
 const ErrorLineOffsetRight = 250            // Отступ линий ошибок справа
 const ErrorLineOffsetBottom = 50            // Отступ линий ошибок снизу
 
-const reklama_time = 1500                   // Время рекламы в МС
+// const reklama_time = 1500                   // Время рекламы в МС
 
 const popup_size = [150,80]                 // Размер уведомления при нажатии на датчик
 const popup_livetime = 2000                 // Время жизни уведомления
-const popup_moving_thread_time = 5         // Время в МС сколько раз будет обновляться позиция уведомления
+const popup_moving_thread_time = 5          // Время в МС сколько раз будет обновляться позиция уведомления

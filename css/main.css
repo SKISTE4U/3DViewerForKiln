@@ -195,14 +195,18 @@ svg{
 }
 .popup{
     position: absolute;
+	line-height: 1em;
     left: 100px;
     top: 100px;
     /* user-select: none; */
-    background: rgba(255, 255, 255, 0.2);
-    color: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.7);
+	font-weight: 700;
+	font-size: 20px;
+	/* border: 3px solid white; */
+    color: rgb(0, 0, 0);
     padding: 5px;
     box-sizing: border-box;
-	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+	text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
     border-radius: 15px;
     transform-origin: 50% 100%;
     /* animation: show_popup .5s ease-in-out forwards; */
@@ -212,6 +216,9 @@ svg{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.popup .div{
+	word-wrap: break-word;
 }
 .triangle {
 	position: absolute;

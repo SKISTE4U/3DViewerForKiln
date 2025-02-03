@@ -8,18 +8,6 @@ function onMouseUpdate(e) {
 document.addEventListener('mousemove', onMouseUpdate, false);
 document.addEventListener('mouseenter', onMouseUpdate, false);
 
-
-// Экран загрузки
-setTimeout(function() {
-    let temp = document.querySelector('.reklama')
-    temp.style.animation = 'opacity_low 1s ease-in-out forwards'
-    temp.querySelector('.logo').style.animation = 'remove 1s ease-in-out forwards'
-},reklama_time)
-setTimeout(function() {
-    let temp = document.querySelector('.reklama')
-    temp.style.display = 'none'
-},reklama_time+1000)
-
 // GET запрос для оперативной загрузки модели из гитхаб
 function httpGet(theUrl)
 {
@@ -94,10 +82,17 @@ function go_wireframe() {
 
 // Перевод всех датчиков в ошибку или обратно
 function reskin_sensors(type) {
-    for (let x = 0; x < SENSORS.length; x++) {
-        const element = SENSORS[x]['sensor'];
-        if(type == 'default_material'){SENSORS[x]['error'] = false}
-        else if(type == 'error_material'){SENSORS[x]['error'] = true}
+    if(type == 'default_material'){
+        show_popup(null,true,'Все датчики - ОК')
+        for (let x = 0; x < SENSORS.length; x++) {
+            SENSORS[x]['error'] = false
+        }
+    }
+    else if(type == 'error_material'){
+        show_popup(null,true,'Все датчики - Ошибка')
+        for (let x = 0; x < SENSORS.length; x++) {
+            SENSORS[x]['error'] = true
+        }
     }
 }
 
@@ -145,22 +140,22 @@ function change_sensor_status(elem,num) {
 }
 
 // Показать уведомление при нажатии на датчик
-function show_popup(sensor = null, justPopup = false,text = 'EDIT ME') {
+function show_popup(sensor = null, justPopup = false,text = 'EDIT ME',life_time = popup_livetime) {
     console.log('show_popup')
     let div = document.createElement('div')
     div.classList.add('popup')
     // div.style.top = cursor_y - (popup_size[1]+20) + 'px'
     // div.style.left = cursor_x - (popup_size[0]/2) +'px'
-    div.style.top = 10 + 'px'
-    div.style.left = document.body.offsetWidth - (popup_size[0]+10) + 'px'
+    div.style.top = '10px'
+    div.style.left = '50px'
     div.style.width = popup_size[0] + 'px'
-    div.style.height = popup_size[1] + 'px'
+    div.style.minHeight = popup_size[1] + 'px'
     div.style.animation = 'show_popup .5s ease-in-out forwards'
 
     if(!justPopup){
         let name = sensor.name.split('sensor_')[1].split(';')[0]
         let piw = sensor.name.split('sensor_')[1].split(';')[1]
-        div.innerHTML = '<div class="name">'+name+'<br>PIW: '+piw+'</div><div class="triangle"></div>'
+        div.innerHTML = '<div class="name">'+name+'<br><br>PIW: '+piw+'</div><div class="triangle"></div>'
         let interval = setInterval(function () {
             const pos = BABYLON.Vector3.Project(
                 sensor.getAbsolutePosition(),
@@ -176,15 +171,16 @@ function show_popup(sensor = null, justPopup = false,text = 'EDIT ME') {
         },popup_moving_thread_time)
     }
     else{
-        div.innerHTML = '<div class="name">'+text+'</div><div class="triangle"></div>'
+        div.innerHTML = '<div class="name">'+text+'</div>'
     }
     setTimeout(function () {
         div.style.animation = 'close_popup .5s ease-in-out forwards'
-    },popup_livetime)
+    },life_time)
     setTimeout(function () {
-        clearInterval(interval)
+        try{clearInterval(interval)}
+        catch{}
         div.remove()
-    },popup_livetime+500)
+    },life_time+500)
     document.body.append(div)
 }
 
@@ -192,6 +188,7 @@ function show_popup(sensor = null, justPopup = false,text = 'EDIT ME') {
 function show_all_sensors(elem,showOrNot) {
     if(showOrNot){
         elem.setAttribute('onclick','show_all_sensors(this,false)')
+        show_popup(null,true,'Теперь вы видите все датчики насквозь')
         for (let x = 0; x < SENSORS.length; x++) {
             const element = SENSORS[x];
             element.sensor.renderingGroupId = 1
@@ -199,6 +196,7 @@ function show_all_sensors(elem,showOrNot) {
     }
     else{
         elem.setAttribute('onclick','show_all_sensors(this,true)')
+        show_popup(null,true,'Теперь вы видите датчики как обычно')
         for (let x = 0; x < SENSORS.length; x++) {
             const element = SENSORS[x];
             element.sensor.renderingGroupId = 0
@@ -219,5 +217,17 @@ function show_settings(elem,isShowing) {
         document.querySelector('.close_button').querySelector('img').style.animation = 'closing_settings_button .5s ease-in-out forwards'
         document.querySelector('.close_button').style.opacity = '.1'
         document.querySelector('.settings').style.animation = 'close_settings .5s ease-in-out forwards'
+    }
+}
+
+// Перейти в режим добавления датчиков
+function adding_sensors_mode(elem,type) {
+    if(DEBUG_FOR_SAVE_COORDS){
+        DEBUG_FOR_SAVE_COORDS = false
+        show_popup(null,true,'Вы вышли из режима добавления датчиков')
+    }
+    else{
+        DEBUG_FOR_SAVE_COORDS = true
+        show_popup(null,true,'Вы перешли в режим добавления дачтиков, попрошу заметить, что нужно добавлять в файл из буфера обмена',5000)
     }
 }
