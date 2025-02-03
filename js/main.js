@@ -368,6 +368,7 @@ initFunction().then(() => {sceneToRender = scene
     // Resize
     window.addEventListener("resize", function () {
         engine.resize();
+        error_buttons = []
         // this.document.querySelector('#test').querySelector('svg').height = window.innerHeight
         // this.document.querySelector('#test').querySelector('svg').width = window.innerWidth
     });

@@ -105,6 +105,10 @@ function reskin_sensors(type) {
 function show_settings_sensors(){
     let zone = document.querySelector('.sensors_zone').querySelector('.sensors')
     zone.innerHTML = ''
+    if(document.querySelector('.sensors_zone').style.display == 'block'){
+        document.querySelector('.sensors_zone').style.display = 'none'
+        return
+    }
     document.querySelector('.sensors_zone').style.display = 'block'
     for (let x = 0; x < SENSORS.length; x++) {
         const element = SENSORS[x];
