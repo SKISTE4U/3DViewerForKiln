@@ -18,5 +18,8 @@
   "description": "",
   "devDependencies": {
     "@babylonjs/core": "^7.45.0"
+  },
+  "dependencies": {
+    "babylonjs": "^7.47.2"
   }
 }
