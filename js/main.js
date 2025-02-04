@@ -8,6 +8,7 @@ var debug = true
 var global_camera = null
 var default_material = null
 var error_material = null
+var new_material = null
 var error_line = null
 var engine = null;
 var scene = null;
@@ -122,10 +123,14 @@ var createScene = function () {
     error_material.emissiveColor.g = 0;
     error_material.hasAlpha = true
 
+    new_material = new BABYLON.StandardMaterial("", scene);
+    new_material.diffuseColor = new BABYLON.Color3(39/255, 36/255, 255/255);
+    default_material.alpha = 1;
+
     // Добавление датчиков в 3D
     for (let x = 0; x < SENSORS.length; x++) {
         const element = SENSORS[x];
-        var sphere = BABYLON.MeshBuilder.CreateSphere(element['name']+';'+element.PIW, {diameter: SensorsDiameter, segments: 6}, scene);
+        var sphere = BABYLON.MeshBuilder.CreateSphere('sensor_'+element['name']+';'+element.PIW, {diameter: SensorsDiameter, segments: 6}, scene);
         sphere.position.x = element['position'][0]
         sphere.position.y = element['position'][1]
         sphere.position.z = element['position'][2]
@@ -160,14 +165,14 @@ var createScene = function () {
                             vector = pickResult.pickedPoint;
                             console.log('left mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
                             let rand_int = randint(0,100000)
-                            let text = `{'name':'sensor_RENAME_ME','PIW':${rand_int},'error':false,'position':[${vector['x']},${vector['y']},${vector['z']}],'pdf':'RENAME_ME.pdf'},`
+                            let text = `{'name':'RENAME_ME','PIW':${rand_int},'error':false,'position':[${vector['x']},${vector['y']},${vector['z']}],'pdf':'RENAME_ME.pdf'},`
                             unsecuredCopyToClipboard(text);
 
-                            let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {diameter: SensorsDiameter, segments: 6}, scene);
+                            let sphere = BABYLON.MeshBuilder.CreateSphere('sensor_Датчик добавленный в данной сессии, что бы он появился как нормальный, добавьте его в список и перезагрузитесь', {diameter: SensorsDiameter, segments: 6}, scene);
                             sphere.position.x = vector['x']
                             sphere.position.y = vector['y']
                             sphere.position.z = vector['z']
-                            sphere.material = default_material
+                            sphere.material = new_material
                             sphere.isPickable = true
                             show_popup(null,true,text='Датчик успешно скопирован в буфер обмена')
                         }
@@ -194,6 +199,7 @@ var createScene = function () {
                             console.log("- Меш:", element.pickedMesh.name);
                         }
                     }
+                    return
                 }
                 catch(error){
                     console.log(error)
@@ -224,19 +230,7 @@ var createScene = function () {
     return scene;
 };
 
-function unsecuredCopyToClipboard(text) {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-      document.execCommand('copy');
-    } catch (err) {
-      console.error('Unable to copy to clipboard', err);
-    }
-    document.body.removeChild(textArea);
-  }
+
 
 function getInfoAboutSensor(text) {
     alert(text)
