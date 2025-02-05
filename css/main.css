@@ -266,6 +266,45 @@ svg{
 	animation: close_settings .5s ease-in-out forwards;
 }
 
+.pdf_zone{
+	position: absolute;
+	height: calc(100vh - 30px);
+	/* padding: 10px; */
+	box-sizing: border-box;
+	width: calc(calc(100vh / 16) * 9);
+	min-width: 20vw;
+	/* transform: translate(-50% 50%); */
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
+	left:calc(50vw - calc(calc(calc(100vh / 16) * 9) / 2));
+	background: white;
+	color: #000;
+	transition: all .5s;
+	display: none;
+	z-index: 10;
+}
+.pdf_zone .header{
+	display: flex;
+	justify-content: space-between;
+}
+.pdf_zone .header span:nth-child(1){
+	text-align: center;
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+	font-size: 20px;
+}
+.pdf_zone .header img{
+	height: 40px;
+	user-select: none;
+	cursor: pointer;
+}
+.pdf_zone iframe{
+	height: 100%;
+	width: 100%;
+}
+
 @keyframes show_settings {
 	0%{
 		left: -50px;

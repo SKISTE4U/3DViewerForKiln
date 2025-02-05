@@ -245,15 +245,7 @@ function getSensorNumberByPIW(PIW) {
     }
 }
 
-function getSensorInfo(num) {
-//     alert(`Инфа про датчик:
-// PIW - ${SENSORS[num].PIW}
-// Название - ${SENSORS[num].name}
-// Пдфка - ${SENSORS[num].pdf}
-// Координаты - ${SENSORS[num].position}`)
-    let pdf_path = window.location.origin+'/pdf/'+SENSORS[num]['pdf']
-    window.open(pdf_path, '_blank').focus();
-}
+
 
 function create_error_lines() {
     let df = document.querySelector('#test')
@@ -301,14 +293,14 @@ function create_error_lines() {
             const element = SENSORS[numb]
             let button = document.createElement('input')
             button.type = 'button'
-            button.value = element.name.split('sensor_')[1] + ' | PIW: '+element['PIW']
+            button.value = element.name + ' | PIW: '+element['PIW']
             // button.innerHTML = element.name.split('sensor_')[1] + ' | PIW: '+element['PIW']
             button.style.top = pos2._y-offset+'px'
             button.style.left = pos2._x+'px'
             button.style.width = WidthLine+'px'
             button.style.height = offsetOfErrorLine + 'px'
             button.classList.add('sensor_error_button')
-            button.setAttribute('onclick',`getSensorInfo(${numb})`)
+            button.setAttribute('onclick',`openSensorPDF(${numb})`)
             document.body.appendChild(button)
             offset += offsetOfErrorLine
         }

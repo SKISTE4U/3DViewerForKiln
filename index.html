@@ -43,6 +43,19 @@
             <span>БАЛАКОВО</span>
         </div>
     </div> -->
+    <div class="pdf_zone">
+        <div class="header">
+            <span class="sensor_name">LHZ</span>
+            <span>
+                <img src="public/open_directly_black.png" alt="" srcset="" onclick="openDirectlyPDF()">
+                <img src="public/rotate_black.png" alt="" srcset="" onclick="rotate_pdf(this,true)">
+                <img src="public/close_black.png" alt="" srcset="" onclick="close_pdf()">
+                
+            </span>
+        </div>
+        <iframe src="C:\Users\MZ_Penka\Desktop\3DViewerForKiln\3DViewerForKiln\pdf\LHZ K1000.pdf" frameborder="0"></iframe>
+        <!-- <iframe src="C:\Users\MZ_Penka\Desktop\3DViewerForKiln\3DViewerForKiln\pdf\horizontal_pdf.pdf" frameborder="0"></iframe> -->
+    </div>
     <div class="sensors_zone">
         <div class="header">
             <span>Датчики:</span>
@@ -92,12 +105,15 @@
                 <div class="one_button" onclick="adding_sensors_mode()">
                     <img src="public/plus_white.png" alt="" srcset="">
                 </div>
+                <div class="one_button" onclick="go_wireframe()">
+                    <img src="public/wireframe_white.png" alt="" srcset="">
+                </div>
             </div>
             
         </div>
         <!-- <button accesskey="h" onclick="change_debug_mode()">Remove control [H]</button><br> -->
-        <!-- <input type="button" value="Wireframe" onclick="go_wireframe()"><br>
-        <input type="button" value="Go all ok" onclick="reskin_sensors('default_material')"><br>
+        <!-- <input type="button" value="Wireframe" onclick="go_wireframe()"><br> -->
+        <!-- <input type="button" value="Go all ok" onclick="reskin_sensors('default_material')"><br>
         <input type="button" value="Go all error" onclick="reskin_sensors('error_material')"><br>
         <input type="button" value="Sensors DB" onclick="show_settings_sensors()"><br>
         <input type="button" value="show all throught meshes" onclick="show_all_sensors(true)"><br>

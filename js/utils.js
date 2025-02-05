@@ -328,3 +328,45 @@ function removeIfNotDeveloper(){
     show_settings_sensors(true)
     reskin_sensors()
 }
+
+// Перевернуть пдф
+function rotate_pdf(elem,isRotate) {
+    let pdf_zone = document.querySelector('.pdf_zone')
+    if(isRotate){
+        elem.setAttribute('onclick','rotate_pdf(this,false)')
+        pdf_zone.style.width = 100 + 'vw'
+        pdf_zone.style.left = 0
+    }
+    else{
+        elem.setAttribute('onclick','rotate_pdf(this,true)')
+        pdf_zone.style.width = 'calc(calc(100vh / 16) * 9)'
+        pdf_zone.style.left = 'calc(50vw - calc(calc(calc(100vh / 16) * 9) / 2))'
+    }
+}
+
+// Закрыть пдф
+function close_pdf() {
+    document.querySelector('.pdf_zone').style.display = 'none'
+}
+
+// Открыть окно pdf
+function openSensorPDF(num) {
+    //     alert(`Инфа про датчик:
+    // PIW - ${SENSORS[num].PIW}
+    // Название - ${SENSORS[num].name}
+    // Пдфка - ${SENSORS[num].pdf}
+    // Координаты - ${SENSORS[num].position}`)
+    // let pdf_path = window.location.origin+'/pdf/'+SENSORS[num]['pdf']
+    let pdf_path = work_dir+'/pdf/'+SENSORS[num]['pdf']
+    let pdf_zone = document.querySelector('.pdf_zone')
+
+    pdf_zone.querySelector('.sensor_name').innerHTML = SENSORS[num]['name']
+    pdf_zone.querySelector('iframe').src = pdf_path
+    pdf_zone.style.display = 'block'
+    // window.open(pdf_path, '_blank').focus();
+}
+
+// Открыть в отдельном окне pdf
+function openDirectlyPDF() {
+    window.open(document.querySelector('.pdf_zone').querySelector('iframe').src, '_blank').focus();
+}
