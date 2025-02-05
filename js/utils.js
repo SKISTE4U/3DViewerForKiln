@@ -346,7 +346,10 @@ function rotate_pdf(elem,isRotate) {
 
 // Закрыть пдф
 function close_pdf() {
-    document.querySelector('.pdf_zone').style.display = 'none'
+    document.querySelector('.pdf_zone').style.animation = 'to_up ease-in-out .5s forwards'
+    setTimeout(function(){
+        document.querySelector('.pdf_zone').style.display = 'none'
+    },500)
 }
 
 // Открыть окно pdf
@@ -363,6 +366,7 @@ function openSensorPDF(num) {
     pdf_zone.querySelector('.sensor_name').innerHTML = SENSORS[num]['name']
     pdf_zone.querySelector('iframe').src = pdf_path
     pdf_zone.style.display = 'block'
+    pdf_zone.style.animation = 'from_up ease-in-out .5s forwards'
     // window.open(pdf_path, '_blank').focus();
 }
 

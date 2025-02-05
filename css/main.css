@@ -372,3 +372,26 @@ svg{
 		opacity: 0;
 	}
 }
+@keyframes opacity_up {
+	0%{
+		opacity: 0;
+	}
+	100%{
+		opacity: 1;
+	}
+}
+@keyframes from_up {
+	0%{
+		transform: translateY(-100vh);
+	}
+	100%{
+		transform: translateY(0);
+	}
+}@keyframes to_up {
+	0%{
+		transform: translateY(0);
+	}
+	100%{
+		transform: translateY(-100vh);
+	}
+}
