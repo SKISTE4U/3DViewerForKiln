@@ -304,20 +304,33 @@ svg{
 	height: 100%;
 	width: 100%;
 }
+.debug_mode{
+	display: none;
+}
 
 @keyframes show_settings {
 	0%{
 		left: -50px;
+		opacity: 0;
+	}
+	50%{
+		opacity: .3;
 	}
 	100%{
+		opacity: 1;
 		left: 0px;
 	}
 }
 @keyframes close_settings {
 	0%{
+		opacity: 1;
 		left: 0px;
 	}
+	50%{
+		opacity: .3;
+	}
 	100%{
+		opacity: 0;
 		left: -50px;
 	}
 }

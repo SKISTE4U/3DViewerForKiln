@@ -374,3 +374,22 @@ function openSensorPDF(num) {
 function openDirectlyPDF() {
     window.open(document.querySelector('.pdf_zone').querySelector('iframe').src, '_blank').focus();
 }
+
+// Выключить отображения инструментов разработчика
+function change_debug_mode() {
+    let temp = document.querySelectorAll('.debug_mode')
+    if(debug){
+        for (let x = 0; x < temp.length; x++) {
+            const element = temp[x];
+            element.style.display = 'none'
+        }
+        debug = false
+    }
+    else{
+        for (let x = 0; x < temp.length; x++) {
+            const element = temp[x];
+            element.style.display = 'block'
+        }
+        debug = true
+    }
+}

@@ -3,7 +3,7 @@ var canvas = document.getElementById("renderCanvas");
 var last_user_activity = 0
 var wireframe = true
 var error_buttons = []
-var debug = true
+var debug = false
 
 var global_camera = null
 var default_material = null
@@ -36,23 +36,7 @@ var startRenderLoop = function (engine, canvas) {
 }
 
 
-function change_debug_mode() {
-    let temp = document.querySelectorAll('.debug_mode')
-    if(debug){
-        for (let x = 0; x < temp.length; x++) {
-            const element = temp[x];
-            element.style.display = 'none'
-        }
-        debug = false
-    }
-    else{
-        for (let x = 0; x < temp.length; x++) {
-            const element = temp[x];
-            element.style.display = 'block'
-        }
-        debug = true
-    }
-}
+
 
 var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
 var createScene = function () {
