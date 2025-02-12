@@ -32,3 +32,5 @@ const popup_moving_thread_time = 5          // Время в МС сколько
 const work_dir = 'C:\\Users\\MZ_Penka\\Desktop\\3DViewerForKiln\\3DViewerForKiln'  // Костыль для того чтоб отображение пдф корректно работало
 
 const window_size = [600,800]               // Размер окна при запуске в режиме --app
+
+const running_row_time = 20                 // Время анимации бегущей строки, в секундах

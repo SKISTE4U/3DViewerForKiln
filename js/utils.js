@@ -393,3 +393,45 @@ function change_debug_mode() {
         debug = true
     }
 }
+
+// Создать анимацию для блоков ошибки
+function CalcRunningRow() {
+    let style_block = document.querySelector('.keyframes_generator')
+    // style_block.classList.add('keyframes_generator')
+    let sensors = document.querySelectorAll('.sensor_error_button')
+    style_block.innerHTML = ''
+    for (let x = 0; x < sensors.length; x++) {
+        const element = sensors[x];
+        let width = element.querySelector('span').offsetWidth - popup_size[0] - 40
+        style_block.innerHTML = style_block.innerHTML +`
+        @keyframes running_span_${x} {
+    0%{
+        transform: translateX(0);
+    }
+    30%{
+        transform: translateX(-${width}px);
+    }
+    50%{
+        transform: translateX(-${width}px);
+    }
+    80%{
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+        `
+        element.querySelector('span').style.animation = `running_span_${x} ${running_row_time}s linear infinite`
+        let dur = 0
+        if(parseInt(width/10) <= 5){
+            dur = 5
+        }
+        else{
+            dur = parseInt(width/10)
+        }
+        // element.querySelector('span').style.animation = `running_span_${x} ${dur}s linear infinite`
+        // element.querySelector('span').style.setProperty('animation','running_span ${dur}s linear infinite')
+        console.log(width)
+    }
+}

@@ -114,7 +114,7 @@ var createScene = function () {
     // Добавление датчиков в 3D
     for (let x = 0; x < SENSORS.length; x++) {
         const element = SENSORS[x];
-        var sphere = BABYLON.MeshBuilder.CreateSphere('sensor_'+element['name']+';'+element.PIW, {diameter: SensorsDiameter, segments: 6}, scene);
+        var sphere = BABYLON.MeshBuilder.CreateSphere('sensor_'+element['name']+';'+element.PIW, {diameter: SensorsDiameter, segments: 3}, scene);
         sphere.position.x = element['position'][0]
         sphere.position.y = element['position'][1]
         sphere.position.z = element['position'][2]
@@ -275,9 +275,9 @@ function create_error_lines() {
         for (let x = 0; x < temp.length; x++) {
             let numb = getSensorNumberByPIW(temp[x]);
             const element = SENSORS[numb]
-            let button = document.createElement('input')
+            let button = document.createElement('div')
             button.type = 'button'
-            button.value = element.name + ' | PIW: '+element['PIW']
+            button.innerHTML = '<span>'+element.name + ' | PIW: '+element['PIW']+"</span>"
             // button.innerHTML = element.name.split('sensor_')[1] + ' | PIW: '+element['PIW']
             button.style.top = pos2._y-offset+'px'
             button.style.left = pos2._x+'px'
@@ -288,6 +288,7 @@ function create_error_lines() {
             document.body.appendChild(button)
             offset += offsetOfErrorLine
         }
+        CalcRunningRow()
         // console.log(error_buttons)
         // console.log(temp)
         if(error_buttons != temp){console.log('no')}

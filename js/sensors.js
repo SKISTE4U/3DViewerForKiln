@@ -28,9 +28,12 @@ var SENSORS = [
     {'name':'TE1Z K1027','PIW':12337,'error':false,'position':[0.43541482962736244,18.26119766384363,-1.538040662160574],'pdf':'RENAME_ME.pdf'},
     {'name':'TE1 K1028','PIW':55135,'error':false,'position':[-0.8870165344750423,18.26119766384363,-1.4865680653282691],'pdf':'RENAME_ME.pdf'},
     {'name':'TE1 K1026','PIW':27298,'error':false,'position':[-0.21908605289615923,18.5,-1.4966637600910113],'pdf':'RENAME_ME.pdf'},
-    {'name':'HORIZONTAL PDF TEST','PIW':85944,'error':true,'position':[-1.6236091760125637,32.12059157781306,-12.471143483429461],'pdf':'horizontal_pdf.pdf'},
-    {'name':'VERTICAL PDF TEST','PIW':6247,'error':true,'position':[1.0820217618658445,32.175095782535685,-12.561003509481537],'pdf':'LHZ K1000.pdf'},
-
+    {'name':'HORIZONTAL PDF TEST','PIW':85944,'error':true,'position':[-1.6236091760125637,40.12059157781306,-12.471143483429461],'pdf':'horizontal_pdf.pdf'},
+    {'name':'VERTICAL PDF TEST','PIW':6247,'error':true,'position':[1.0820217618658445,41.175095782535685,-12.561003509481537],'pdf':'LHZ K1000.pdf'},
+    {'name':'Очень длинное название датчика прям ваще заебешься читать чтоб протестить бегущую строку','PIW':70804,'error':true,'position':[-0.811475433830509,60.6375737466077,-3.6645780503749847],'pdf':'RENAME_ME.pdf'},
+    {'name':'Очень длинное название датчика прям ваще заебешься читать чтоб протестить бегущую строку а тут вообще еще больше бля текста','PIW':70404,'error':true,'position':[-0.811475433830509,61.6375737466077,-3.6645780503749847],'pdf':'RENAME_ME.pdf'},
+    {'name':'test','PIW':70444,'error':true,'position':[-0.811475433830509,59.6375737466077,-3.6645780503749847],'pdf':'RENAME_ME.pdf'},
+    {'name':'testtesttesttesttesttesttest','PIW':704244,'error':true,'position':[-0.811475433830509,59.6375737466077,-3.6645780503749847],'pdf':'RENAME_ME.pdf'},
 
 
 
