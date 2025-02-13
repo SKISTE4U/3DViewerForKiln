@@ -149,7 +149,7 @@ var createScene = function () {
                             vector = pickResult.pickedPoint;
                             console.log('left mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
                             let rand_int = randint(0,100000)
-                            let text = `{'name':'RENAME_ME','PIW':${rand_int},'error':false,'position':[${vector['x']},${vector['y']},${vector['z']}],'pdf':'RENAME_ME.pdf'},`
+                            let text = `{'name':'RENAME_ME','PIW':${rand_int},'error':false,'position':[${vector['x']},${vector['y']},${vector['z']}],'passport':'having_12.pdf','photo':'photo.jpg','blueprint':'blueprint.pdf'},`
                             unsecuredCopyToClipboard(text);
 
                             let sphere = BABYLON.MeshBuilder.CreateSphere('sensor_Датчик добавленный в данной сессии, что бы он появился как нормальный, добавьте его в список и перезагрузитесь', {diameter: SensorsDiameter, segments: 6}, scene);

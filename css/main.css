@@ -279,41 +279,38 @@ svg{
 
 .pdf_zone{
 	position: absolute;
-	height: calc(100vh - 30px);
+	/* height: calc(100vh - 30px); */
+	height: 30vh;
 	/* padding: 10px; */
 	box-sizing: border-box;
-	width: calc(calc(100vh / 16) * 9);
+	width: 100%;
 	min-width: 20vw;
 	/* transform: translate(-50% 50%); */
 	text-align: center;
 	margin-left: auto;
     margin-right: auto;
-	left:calc(50vw - calc(calc(calc(100vh / 16) * 9) / 2));
-	background: white;
+	/* left:calc(50vw - calc(calc(calc(100vh / 16) * 9) / 2)); */
+	background: rgb(255,255,255);
+	background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 95%, rgba(0,212,255,0) 100%);
 	color: #000;
 	transition: all .5s;
 	display: none;
 	z-index: 10;
+	grid-template-rows: 1fr .1fr;
 }
-.pdf_zone .header{
-	display: flex;
-	justify-content: space-between;
-}
-.pdf_zone .header span:nth-child(1){
-	text-align: center;
-	justify-content: center;
-	display: flex;
-	flex-direction: column;
+.pdf_zone .name{
 	font-size: 20px;
 }
-.pdf_zone .header img{
-	height: 40px;
-	user-select: none;
-	cursor: pointer;
+.pdf_zone .images{
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
 }
-.pdf_zone iframe{
-	height: 100%;
-	width: 100%;
+.pdf_zone .images img{
+	transition: all .5s;
+	cursor: pointer;
 }
 .debug_mode{
 	display: none;

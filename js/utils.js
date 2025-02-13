@@ -17,6 +17,15 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
+function pdf_zone_event() {
+    // let pdf_zone = document.querySelector('.pdf_zone')
+    // pdf_zone.addEventListener('onmouseup',close_pdf(event))
+}
+
+function onContentLoaded() {
+    pdf_zone_event()
+}
+
 // Копирование текста, которое обходит CORS
 // function unsecuredCopyToClipboard(text) {
 //     const textArea = document.createElement("textarea");
@@ -346,10 +355,26 @@ function rotate_pdf(elem,isRotate) {
 
 // Закрыть пдф
 function close_pdf() {
-    document.querySelector('.pdf_zone').style.animation = 'to_up ease-in-out .5s forwards'
+    let pdf_zone = document.querySelector('.pdf_zone')
+    let images = pdf_zone.querySelectorAll('img')
+    let temp = 0
+    for (let x = 0; x < images.length; x++) {
+        const element = images[x];
+        element.style.opacity = '1'
+        element.style.animation = 'pdf_remove .5s ease-in-out forwards'
+        element.style.animationDelay = temp+'s'
+        setTimeout(function () {
+            element.style.opacity = '0'
+        },temp*1000)
+        temp+= .1
+    }
     setTimeout(function(){
-        document.querySelector('.pdf_zone').style.display = 'none'
-    },500)
+        document.querySelector('.pdf_zone').style.animation = 'pdf_remove ease-in-out .5s forwards'
+        setTimeout(function(){
+            document.querySelector('.pdf_zone').style.display = 'none'
+        },500)
+    },temp*1000)
+    
 }
 
 // Открыть окно pdf
@@ -360,16 +385,40 @@ function openSensorPDF(num) {
     // Пдфка - ${SENSORS[num].pdf}
     // Координаты - ${SENSORS[num].position}`)
     // let pdf_path = window.location.origin+'/pdf/'+SENSORS[num]['pdf']
-    let pdf_path = work_dir+'/pdf/'+SENSORS[num]['pdf']
+    // let pdf_path = work_dir+'/pdf/'+SENSORS[num]['pdf']
     let pdf_zone = document.querySelector('.pdf_zone')
 
-    pdf_zone.querySelector('.sensor_name').innerHTML = SENSORS[num]['name']
-    pdf_zone.querySelector('iframe').src = pdf_path
-    pdf_zone.style.display = 'block'
-    pdf_zone.style.animation = 'from_up ease-in-out .5s forwards'
-    // window.open(pdf_path, '_blank').focus();
-}
+    pdf_zone.style.animation = 'pdf_show .5s ease-in-out forwards'
 
+    pdf_zone.querySelector('.name').innerHTML = SENSORS[num]['name']
+    pdf_zone.style.display = 'grid'
+    let temp = 0
+    let images = pdf_zone.querySelectorAll('img')
+    for (let x = 0; x < images.length; x++) {
+        const element = images[x];
+        element.style.opacity = '0'
+        element.style.animation = 'pdf_show .5s ease-in-out forwards'
+        element.style.animationDelay = temp+'s'
+        setTimeout(function () {
+            element.style.opacity = '1'
+        },temp*1000)
+        temp+= .2
+    }
+    console.log(images)
+    images[0].setAttribute('onclick',`pdf_open_photo(${SENSORS[num]['photo']})`)
+    images[1].setAttribute('onclick',`pdf_open_blueprint(${SENSORS[num]['blueprint']})`)
+    images[2].setAttribute('onclick',`pdf_open_passport(${SENSORS[num]['passport']})`)
+    // pdf_zone.style.animation = 'from_up ease-in-out .5s forwards'
+}
+function pdf_open_passport(name) {
+    alert('WIP\n'+name)
+}
+function pdf_open_photo(name) {
+    alert('WIP\n'+name)
+}
+function pdf_open_blueprint(name) {
+    alert('WIP\n'+name)
+}
 // Открыть в отдельном окне pdf
 function openDirectlyPDF() {
     window.open(document.querySelector('.pdf_zone').querySelector('iframe').src, '_blank').focus();
