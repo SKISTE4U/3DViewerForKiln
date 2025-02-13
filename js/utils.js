@@ -403,7 +403,20 @@ function CalcRunningRow() {
     for (let x = 0; x < sensors.length; x++) {
         const element = sensors[x];
         let width = element.querySelector('span').offsetWidth - popup_size[0] - 40
+        let dur = width / (WidthLine/4)
+        if(parseInt(dur) < 1){
+            dur = 1
+        }
+        else{
+            dur = parseInt(dur)
+        }
         style_block.innerHTML = style_block.innerHTML +`
+        .running_span_${x}{
+            animation: none;
+        }
+        .running_span_${x}:hover{
+            animation: running_span_${x} ${dur}s linear infinite;
+        }
         @keyframes running_span_${x} {
     0%{
         transform: translateX(0);
@@ -422,14 +435,7 @@ function CalcRunningRow() {
     }
 }
         `
-        element.querySelector('span').style.animation = `running_span_${x} ${running_row_time}s linear infinite`
-        let dur = 0
-        if(parseInt(width/10) <= 5){
-            dur = 5
-        }
-        else{
-            dur = parseInt(width/10)
-        }
+        element.querySelector('span').classList.add(`running_span_${x}`)
         // element.querySelector('span').style.animation = `running_span_${x} ${dur}s linear infinite`
         // element.querySelector('span').style.setProperty('animation','running_span ${dur}s linear infinite')
         console.log(width)
