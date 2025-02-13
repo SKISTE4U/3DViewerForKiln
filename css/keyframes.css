@@ -118,20 +118,20 @@
 @keyframes pdf_show {
 	0%{
 		opacity: 0;
-		transform: translateY(-100%);
+		transform: translateY(-100%) scale(0);
 	}
 	100%{
 		opacity: 1;
-		transform: translateY(0);
+		transform: translateY(0) scale(1);
 	}
 }
 @keyframes pdf_remove {
 	0%{
 		opacity: 1;
-		transform: translateY(0);
+		transform: translateY(0) scale(1);
 	}
 	100%{
 		opacity: 0;
-		transform: translateY(-100%);
+		transform: translateY(-100%) scale(0);
 	}
 }

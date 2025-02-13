@@ -18,11 +18,12 @@ function httpGet(theUrl)
 }
 
 function pdf_zone_event() {
-    // let pdf_zone = document.querySelector('.pdf_zone')
-    // pdf_zone.addEventListener('onmouseup',close_pdf(event))
+    let pdf_zone = document.querySelector('.pdf_zone')
+    pdf_zone.addEventListener('onmouseup',(e) => {console.log(e)})
 }
 
 function onContentLoaded() {
+    console.log('onContentLoaded init')
     pdf_zone_event()
 }
 
@@ -354,7 +355,11 @@ function rotate_pdf(elem,isRotate) {
 }
 
 // Закрыть пдф
-function close_pdf() {
+function close_pdf(e = null) {
+    if(e){
+        let target = e.currentTarget
+        console.log(e)
+    }
     let pdf_zone = document.querySelector('.pdf_zone')
     let images = pdf_zone.querySelectorAll('img')
     let temp = 0
@@ -390,7 +395,7 @@ function openSensorPDF(num) {
 
     pdf_zone.style.animation = 'pdf_show .5s ease-in-out forwards'
 
-    pdf_zone.querySelector('.name').innerHTML = SENSORS[num]['name']
+    pdf_zone.querySelector('.name').querySelector('span').innerHTML = SENSORS[num]['name']
     pdf_zone.style.display = 'grid'
     let temp = 0
     let images = pdf_zone.querySelectorAll('img')
@@ -404,10 +409,10 @@ function openSensorPDF(num) {
         },temp*1000)
         temp+= .2
     }
-    console.log(images)
-    images[0].setAttribute('onclick',`pdf_open_photo(${SENSORS[num]['photo']})`)
-    images[1].setAttribute('onclick',`pdf_open_blueprint(${SENSORS[num]['blueprint']})`)
-    images[2].setAttribute('onclick',`pdf_open_passport(${SENSORS[num]['passport']})`)
+    // console.log(images)
+    images[0].setAttribute('onclick',`pdf_open_photo('${SENSORS[num]['photo']}')`)
+    images[1].setAttribute('onclick',`pdf_open_blueprint('${SENSORS[num]['blueprint']}')`)
+    images[2].setAttribute('onclick',`pdf_open_passport('${SENSORS[num]['passport']}')`)
     // pdf_zone.style.animation = 'from_up ease-in-out .5s forwards'
 }
 function pdf_open_passport(name) {
@@ -487,6 +492,8 @@ function CalcRunningRow() {
         element.querySelector('span').classList.add(`running_span_${x}`)
         // element.querySelector('span').style.animation = `running_span_${x} ${dur}s linear infinite`
         // element.querySelector('span').style.setProperty('animation','running_span ${dur}s linear infinite')
-        console.log(width)
+        // console.log(width)
     }
 }
+
+document.addEventListener('DOMContentLoaded',onContentLoaded)

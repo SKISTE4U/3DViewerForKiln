@@ -173,20 +173,17 @@ var createScene = function () {
                     const hits = scene.multiPickWithRay(ray);
 
                     if (hits.length > 0) {
-                        console.log("Все меши под курсором:");
                         for (let x = 0; x < hits.length; x++) {
                             const element = hits[x];
                             if(element.pickedMesh.name.startsWith('sensor_') && element.pickedMesh.SKISTE_is_error){
                                 show_popup(element.pickedMesh,false,'')
                                 break
                             }
-                            console.log("- Меш:", element.pickedMesh.name);
                         }
                     }
                     return
                 }
                 catch(error){
-                    console.log(error)
                 }
 
     }
