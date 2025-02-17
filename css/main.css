@@ -280,7 +280,7 @@ svg{
 .pdf_zone{
 	position: absolute;
 	/* height: calc(100vh - 30px); */
-	height: 30vh;
+	height: 20vh;
 	/* padding: 10px; */
 	box-sizing: border-box;
 	width: 100%;
@@ -296,7 +296,7 @@ svg{
 	transition: all .5s;
 	display: none;
 	z-index: 10;
-	grid-template-rows: 1fr .1fr;
+	flex-direction: column;
 }
 .pdf_zone .name span{
 	border-radius: 20px;
@@ -306,17 +306,36 @@ svg{
 	cursor: pointer;
 	border: 5px solid black;
 	background: white;
+	transition: all .3s;
+	margin-top: 30px;
+}
+.pdf_zone .name{
+	margin-top: 15px;
+}
+.pdf_zone .name span:hover{
+	filter: invert(100%);
 }
 .pdf_zone .images{
 	display: flex;
+	position: relative;
 	gap: 10px;
 	justify-content: center;
 	align-items: center;
+	height: 70%;
 	flex-direction: row;
 }
 .pdf_zone .images img{
-	transition: all .5s;
+	transition: all .3s;
 	cursor: pointer;
+	position: relative;
+	height: 100%;
+	border-radius: 10px;
+	/* width: 50%; */
+}
+.pdf_zone .images img:hover{
+	filter: invert(100%);
+	background: white;
+	
 }
 .debug_mode{
 	display: none;

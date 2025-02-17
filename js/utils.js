@@ -396,7 +396,7 @@ function openSensorPDF(num) {
     pdf_zone.style.animation = 'pdf_show .5s ease-in-out forwards'
 
     pdf_zone.querySelector('.name').querySelector('span').innerHTML = SENSORS[num]['name']
-    pdf_zone.style.display = 'grid'
+    pdf_zone.style.display = 'flex'
     let temp = 0
     let images = pdf_zone.querySelectorAll('img')
     for (let x = 0; x < images.length; x++) {
