@@ -114,7 +114,7 @@ var createScene = function () {
     // Добавление датчиков в 3D
     for (let x = 0; x < SENSORS.length; x++) {
         const element = SENSORS[x];
-        var sphere = BABYLON.MeshBuilder.CreateSphere('sensor_'+element['name']+';'+element.PIW, {diameter: SensorsDiameter, segments: 3}, scene);
+        var sphere = BABYLON.MeshBuilder.CreateSphere('sensor_'+element['name']+';'+element.PIW, {diameter: SensorsDiameter, segments: 6}, scene);
         sphere.position.x = element['position'][0]
         sphere.position.y = element['position'][1]
         sphere.position.z = element['position'][2]
@@ -145,12 +145,13 @@ var createScene = function () {
                 try{
                     if (DEBUG_FOR_SAVE_COORDS){
                         //left mouse click
-                        if(event.button == 0){
+                        if(event.button == 0 && document.querySelector('.create_sensor_zone').style.display != 'flex'){
                             vector = pickResult.pickedPoint;
                             console.log('left mouse click: ' + vector.x + ',' + vector.y + ',' + vector.z );
                             let rand_int = randint(0,100000)
-                            let text = `{'name':'RENAME_ME','PIW':${rand_int},'error':false,'position':[${vector['x']},${vector['y']},${vector['z']}],'passport':'having_12.pdf','photo':'photo.jpg','blueprint':'blueprint.pdf'},`
-                            unsecuredCopyToClipboard(text);
+                            create_copy_zone([vector['x'],vector['y'],vector['z']])
+                            // let text = `{'name':'RENAME_ME','PIW':${rand_int},'error':false,'position':[${vector['x']},${vector['y']},${vector['z']}],'passport':'having_12.pdf','photo':'photo.jpg','blueprint':'blueprint.pdf',''},`
+                            // unsecuredCopyToClipboard(text);
 
                             let sphere = BABYLON.MeshBuilder.CreateSphere('sensor_Датчик добавленный в данной сессии, что бы он появился как нормальный, добавьте его в список и перезагрузитесь', {diameter: SensorsDiameter, segments: 6}, scene);
                             sphere.position.x = vector['x']
@@ -158,7 +159,7 @@ var createScene = function () {
                             sphere.position.z = vector['z']
                             sphere.material = new_material
                             sphere.isPickable = true
-                            show_popup(null,true,text='Датчик успешно скопирован в буфер обмена')
+                            // show_popup(null,true,text='Датчик успешно скопирован в буфер обмена')
                         }
                         
                     }
@@ -184,6 +185,7 @@ var createScene = function () {
                     return
                 }
                 catch(error){
+                    // console.error(error)
                 }
 
     }

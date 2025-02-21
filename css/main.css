@@ -19,7 +19,7 @@ a:hover {
 
 button {
 	cursor: pointer;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 }
 
 #info {
@@ -341,4 +341,22 @@ svg{
 }
 .debug_mode{
 	display: none;
+}
+.create_sensor_zone{
+	display: none;
+	position: absolute;
+	background: white;
+	color: black;
+	flex-direction: column;
+	padding: 10px;
+	z-index: 11;
+}
+.create_sensor_zone .one_input{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	word-wrap: none;
+	white-space: nowrap;
+	margin-top: 5px;
+	/* text-align: right; */
 }

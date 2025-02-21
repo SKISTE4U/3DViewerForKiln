@@ -411,7 +411,7 @@ function openSensorPDF(num) {
     }
     // console.log(images)
     images[0].setAttribute('onclick',`pdf_open_photo('${SENSORS[num]['photo']}')`)
-    images[1].setAttribute('onclick',`pdf_open_blueprint('${SENSORS[num]['blueprint']}')`)
+    images[1].setAttribute('onclick',`pdf_open_blueprint('${SENSORS[num]['blueprint']}',${SENSORS[num]['blueprint_page']})`)
     images[2].setAttribute('onclick',`pdf_open_passport('${SENSORS[num]['passport']}')`)
     // pdf_zone.style.animation = 'from_up ease-in-out .5s forwards'
 }
@@ -421,8 +421,9 @@ function pdf_open_passport(name) {
 function pdf_open_photo(name) {
     alert('WIP\n'+name)
 }
-function pdf_open_blueprint(name) {
-    alert('WIP\n'+name)
+function pdf_open_blueprint(name,page) {
+    // alert('WIP\n'+name)
+    window.open(work_dir+'\\pdf\\blueprints\\'+name+"#page="+page, '_blank').focus();
 }
 // Открыть в отдельном окне pdf
 function openDirectlyPDF() {
@@ -494,6 +495,54 @@ function CalcRunningRow() {
         // element.querySelector('span').style.setProperty('animation','running_span ${dur}s linear infinite')
         // console.log(width)
     }
+}
+
+function create_copy_zone(position) {
+    console.log('create_copy_zone')
+    let zone = document.querySelector('.create_sensor_zone')
+    console.log(zone)
+    zone.style.display = 'flex'
+    let inputs = zone.querySelectorAll('input')
+    console.log('df')
+    inputs[1].value = randint(0,10000000)
+    inputs[6].value = position[0]
+    inputs[7].value = position[1]
+    inputs[8].value = position[2]
+    
+    console.log(inputs)
+}
+
+function copy_sensor() {
+    let zone = document.querySelector('.create_sensor_zone')
+    let inputs = zone.querySelectorAll('input')
+    let info = []
+    for (let x = 0; x < inputs.length; x++) {
+        const element = inputs[x];
+        if(element.value != ''){
+            info.push(element.value)
+        }
+        else{
+            alert('Что то у тебя пустое, перепроверь')
+            return
+        }
+    }
+    for (let x = 0; x < inputs.length; x++) {
+        const element = inputs[x];
+        element.value = ''
+    }
+    let sensor = {
+        'name':info[0],
+        'PIW':info[1],
+        'passport':info[2],
+        'blueprint':info[3],
+        'blueprint_page':info[4],
+        'photo':info[5],
+        'position':[parseFloat(info[6]),parseFloat(info[7]),parseFloat(info[8])],
+        'error':false
+    }
+    
+    fallbackCopyTextToClipboard(JSON.stringify(sensor)+',')
+    zone.style.display = 'none'
 }
 
 document.addEventListener('DOMContentLoaded',onContentLoaded)

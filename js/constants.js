@@ -18,7 +18,7 @@ const upperBeta = 1.8                       // Максимальный угол
 const wheelPrecision = 2                    // Zoom Scale
 const offsetOfErrorLine = 30                // Высота линий ошибок
 const WidthLine = 200                       // Ширина линий ошибок
-const SensorsDiameter = .5                  // Диаметр создаваемых сфер
+const SensorsDiameter = .3                  // Диаметр создаваемых сфер
 
 const ErrorLineOffsetRight = 250            // Отступ линий ошибок справа
 const ErrorLineOffsetBottom = 50            // Отступ линий ошибок снизу
